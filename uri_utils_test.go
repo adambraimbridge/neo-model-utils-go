@@ -1,9 +1,8 @@
 package uriutils
 
 import (
-	"testing"
-
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func TestTypeURIsForPeople(t *testing.T) {
@@ -44,4 +43,29 @@ func TestTypeURIsForPrivateCompany(t *testing.T) {
 		"http://www.ft.com/ontology/company/Company"}
 	actualURIs := TypeURIs(typesFromNeo)
 	assert.New(t).EqualValues(expectedURIs, actualURIs)
+}
+
+func TestCompanyAPIURLs(t *testing.T) {
+	apiSpecificNeoTypes := []string{"PublicCompany", "PrivateCompany", "Organisation", "Company",
+		"publiccompany", "PRIVATECompany"}
+	expectedAPIURLRegex := "http://api.ft.com/organisations/[w-]*"
+	for _, neoType := range apiSpecificNeoTypes {
+		assert.New(t).Regexp(expectedAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoType}))
+	}
+}
+
+func TestPeopleAPIURLs(t *testing.T) {
+	apiSpecificNeoTypes := []string{"Person", "person"}
+	expectedAPIURLRegex := "http://api.ft.com/people/[w-]*"
+	for _, neoType := range apiSpecificNeoTypes {
+		assert.New(t).Regexp(expectedAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoType}))
+	}
+}
+
+func TestDefaultAPIURLs(t *testing.T) {
+	apiSpecificNeoTypes := []string{"thing", "relationship", "otherPrivateType"}
+	expectedAPIURLRegex := "http://api.ft.com/things/[w-]*"
+	for _, neoType := range apiSpecificNeoTypes {
+		assert.New(t).Regexp(expectedAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoType}))
+	}
 }
