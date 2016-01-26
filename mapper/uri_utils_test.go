@@ -27,6 +27,7 @@ var baseAPIURL = "http://api.ft.com/"
 var thingAPIURLRegex = baseAPIURL + "things/[w-]*"
 var personAPIURLRegex = baseAPIURL + "people/[w-]*"
 var organisationAPIURLRegex = baseAPIURL + "organisations/[w-]*"
+var brandAPIURLRegex = baseAPIURL + "brands/[w-]*"
 
 func TestTypeURIsForPeople(t *testing.T) {
 	assert.New(t).EqualValues(personURIs, TypeURIs(personLabels))
@@ -61,10 +62,18 @@ func TestCompanyAPIURLs(t *testing.T) {
 }
 
 func TestPeopleAPIURLs(t *testing.T) {
-	neoLabels := []string{"Person", "person"}
+	neoLabels := []string{"Person"}
 	for _, neoLabel := range neoLabels {
 		assert.New(t).Regexp(personAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}))
 		assert.New(t).Regexp(personAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}))
+	}
+}
+
+func TestBrandAPIURLs(t *testing.T) {
+	neoLabels := []string{"Brand"}
+	for _, neoLabel := range neoLabels {
+		assert.New(t).Regexp(brandAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}))
+		assert.New(t).Regexp(brandAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}))
 	}
 }
 
