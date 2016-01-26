@@ -1,4 +1,4 @@
-package uriutils
+package mapper
 
 import (
 	"github.com/stretchr/testify/assert"

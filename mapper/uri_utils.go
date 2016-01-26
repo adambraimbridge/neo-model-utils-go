@@ -1,4 +1,4 @@
-package uriutils
+package mapper
 
 import (
 	"strings"
