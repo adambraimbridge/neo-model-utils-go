@@ -1,0 +1,3 @@
+test:
+  override:
+    - godep go test ./..
