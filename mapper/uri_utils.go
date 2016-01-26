@@ -13,6 +13,8 @@ func APIURL(uuid string, labels []string) string {
 			return base + "people/" + uuid
 		case "organisation", "company", "publiccompany", "privatecompany":
 			return base + "organisations/" + uuid
+		case "brand":
+			return base + "brands/" + uuid
 		}
 	}
 	return base + "things/" + uuid
@@ -39,6 +41,8 @@ func TypeURIs(labels []string) []string {
 			results = append(results, base+"company/PublicCompany")
 		case "privatecompany":
 			results = append(results, base+"company/PrivateCompany")
+		case "brand":
+			results = append(results, base+"product/Brand")
 		}
 	}
 	return results
