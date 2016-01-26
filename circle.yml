@@ -1,6 +1,6 @@
 checkout:
   post:
-    - go get
+    - go get .
 
 test:
   override:
