@@ -1,7 +1,0 @@
-checkout:
-  post:
-    - go get .
-
-test:
-  override:
-    - go test ./...
