@@ -16,6 +16,8 @@ var publicCompanyLabels = append(companyLabels, "PublicCompany")
 var privateCompanyLabels = append(companyLabels, "PrivateCompany")
 
 var baseURI = "http://www.ft.com/ontology/"
+var env = "prod"
+var envTest = "test"
 var personURIs = []string{baseURI + "person/Person"}
 var brandURIs = []string{baseURI + "product/Brand"}
 var organisationURIs = []string{baseURI + "organisation/Organisation"}
@@ -56,32 +58,32 @@ func TestTypeURIsForBrand(t *testing.T) {
 func TestCompanyAPIURLs(t *testing.T) {
 	neoLabels := []string{"PublicCompany", "PrivateCompany", "Organisation", "Company"}
 	for _, neoLabel := range neoLabels {
-		assert.New(t).Regexp(organisationAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}))
-		assert.New(t).Regexp(organisationAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}))
+		assert.New(t).Regexp(organisationAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}, env))
+		assert.New(t).Regexp(organisationAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}, env))
 	}
 }
 
 func TestPeopleAPIURLs(t *testing.T) {
 	neoLabels := []string{"Person"}
 	for _, neoLabel := range neoLabels {
-		assert.New(t).Regexp(personAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}))
-		assert.New(t).Regexp(personAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}))
+		assert.New(t).Regexp(personAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}, env))
+		assert.New(t).Regexp(personAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}, env))
 	}
 }
 
 func TestBrandAPIURLs(t *testing.T) {
 	neoLabels := []string{"Brand"}
 	for _, neoLabel := range neoLabels {
-		assert.New(t).Regexp(brandAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}))
-		assert.New(t).Regexp(brandAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}))
+		assert.New(t).Regexp(brandAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}, env))
+		assert.New(t).Regexp(brandAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}, env))
 	}
 }
 
 func TestDefaultAPIURLs(t *testing.T) {
 	neoLabels := []string{"thing", "relationship", "otherPrivateType"}
 	for _, neoLabel := range neoLabels {
-		assert.New(t).Regexp(thingAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}))
-		assert.New(t).Regexp(thingAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}))
+		assert.New(t).Regexp(thingAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}, env))
+		assert.New(t).Regexp(thingAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}, env))
 	}
 }
 
