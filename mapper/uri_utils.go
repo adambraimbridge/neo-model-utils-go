@@ -5,17 +5,17 @@ import (
 )
 
 var parentTypes = map[string]string{
-	"Thing":          "", // this is here to enable iterating over map keys to get all types
-	"Concept":        "Thing",
-	"Classification": "Thing", //TODO: Guy isn't sure whether this should be Concept
-	"Person":         "Concept",
-	"Organisation":   "Concept",
-	"Company":        "Organisation",
-	"PublicCompany":  "Company",
-	"PrivateCompany": "Company",
-	"Brand":          "Concept",
-	"Subject":        "Classification",
-	"Section":        "Classification",
+	"thing":          "", // this is here to enable iterating over map keys to get all types
+	"concept":        "thing",
+	"classification": "thing", //TODO: Guy isn't sure whether this should be Concept
+	"person":         "concept",
+	"organisation":   "concept",
+	"company":        "organisation",
+	"publiccompany":  "company",
+	"privatecompany": "company",
+	"brand":          "concept",
+	"subject":        "classification",
+	"section":        "classification",
 }
 
 // ParentType returns the immediate parent type for a given Type
