@@ -47,6 +47,12 @@ func TypeURIs(labels []string) []string {
 			results = append(results, base+"company/PrivateCompany")
 		case "brand":
 			results = append(results, base+"product/Brand")
+		case "subject":
+			results = append(results, base+"Subject")
+		case "section":
+			results = append(results, base+"Section")
+		case "topic":
+			results = append(results, base+"Topic")
 		}
 	}
 	return results

@@ -1,9 +1,10 @@
 package mapper
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
 	"unicode"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var thingLabels = []string{"Thing"}
@@ -14,6 +15,10 @@ var organisationLabels = append(conceptLabels, "Organisation")
 var companyLabels = append(organisationLabels, "Company")
 var publicCompanyLabels = append(companyLabels, "PublicCompany")
 var privateCompanyLabels = append(companyLabels, "PrivateCompany")
+var classificationLabels = append(thingLabels, "Classification")
+var subjectLabels = append(classificationLabels, "Subject")
+var sectionLabels = append(classificationLabels, "Section")
+var topicLabels = append(conceptLabels, "Topic")
 
 var baseURI = "http://www.ft.com/ontology/"
 var env = "prod"
@@ -24,6 +29,9 @@ var organisationURIs = []string{baseURI + "organisation/Organisation"}
 var companyURIs = append(organisationURIs, baseURI+"company/Company")
 var publicCompanyURIs = append(companyURIs, baseURI+"company/PublicCompany")
 var privateCompanyURIs = append(companyURIs, baseURI+"company/PrivateCompany")
+var subjectURIs = []string{baseURI + "Subject"}
+var sectionURIs = []string{baseURI + "Section"}
+var topicURIs = []string{baseURI + "Topic"}
 
 var baseAPIURL = "http://api.ft.com/"
 var thingAPIURLRegex = baseAPIURL + "things/[w-]*"
@@ -53,6 +61,18 @@ func TestTypeURIsForPrivateCompany(t *testing.T) {
 
 func TestTypeURIsForBrand(t *testing.T) {
 	assert.New(t).EqualValues(brandURIs, TypeURIs(brandLabels))
+}
+
+func TestTypeURIsForSubject(t *testing.T) {
+	assert.New(t).EqualValues(subjectURIs, TypeURIs(subjectLabels))
+}
+
+func TestTypeURIsForSection(t *testing.T) {
+	assert.New(t).EqualValues(sectionURIs, TypeURIs(sectionLabels))
+}
+
+func TestTypeURIsForTopic(t *testing.T) {
+	assert.New(t).EqualValues(topicURIs, TypeURIs(topicLabels))
 }
 
 func TestCompanyAPIURLs(t *testing.T) {
