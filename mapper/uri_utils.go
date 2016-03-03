@@ -25,6 +25,18 @@ var apiPaths = map[string]string{
 	"thing":        "things",
 }
 
+var typeURIs = map[string]string{
+	"person":         "http://www.ft.com/ontology/person/Person",
+	"organisation":   "http://www.ft.com/ontology/organisation/Organisation",
+	"company":        "http://www.ft.com/ontology/company/Company",
+	"publiccompany":  "http://www.ft.com/ontology/company/PublicCompany",
+	"privatecompany": "http://www.ft.com/ontology/company/PrivateCompany",
+	"brand":          "http://www.ft.com/ontology/product/Brand",
+	"subject":        "http://www.ft.com/ontology/Subject",
+	"section":        "http://www.ft.com/ontology/Section",
+	"topic":          "http://www.ft.com/ontology/Topic",
+}
+
 // ParentType returns the immediate parent type for a given Type
 func ParentType(t string) string {
 	return parentTypes[t]
@@ -89,27 +101,10 @@ func IDURL(uuid string) string {
 // TypeURIs - Builds up the type URI based on type e.g http://www.ft.com/ontology/Person
 func TypeURIs(labels []string) []string {
 	var results []string
-	base := "http://www.ft.com/ontology/"
 	for _, label := range labels {
-		switch strings.ToLower(label) {
-		case "person":
-			results = append(results, base+"person/Person")
-		case "organisation":
-			results = append(results, base+"organisation/Organisation")
-		case "company":
-			results = append(results, base+"company/Company")
-		case "publiccompany":
-			results = append(results, base+"company/PublicCompany")
-		case "privatecompany":
-			results = append(results, base+"company/PrivateCompany")
-		case "brand":
-			results = append(results, base+"product/Brand")
-		case "subject":
-			results = append(results, base+"Subject")
-		case "section":
-			results = append(results, base+"Section")
-		case "topic":
-			results = append(results, base+"Topic")
+		uri := typeURIs[strings.ToLower(label)]
+		if uri != "" {
+			results = append(results, uri)
 		}
 	}
 	return results
