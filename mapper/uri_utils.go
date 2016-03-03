@@ -4,6 +4,25 @@ import (
 	"strings"
 )
 
+var parentTypes = map[string]string{
+	"Thing":          "", // this is here to enable iterating over map keys to get all types
+	"Concept":        "Thing",
+	"Classification": "Thing", //TODO: Guy isn't sure whether this should be Concept
+	"Person":         "Concept",
+	"Organisation":   "Concept",
+	"Company":        "Organisation",
+	"PublicCompany":  "Company",
+	"PrivateCompany": "Company",
+	"Brand":          "Concept",
+	"Subject":        "Classification",
+	"Section":        "Classification",
+}
+
+// ParentType returns the immediate parent type for a given Type
+func ParentType(t string) string {
+	return parentTypes[t]
+}
+
 // APIURL - Establishes the ApiURL given a whether the Label is a Person, Organisation or Company (Public or Private)
 func APIURL(uuid string, labels []string, env string) string {
 	base := "http://api.ft.com/"
