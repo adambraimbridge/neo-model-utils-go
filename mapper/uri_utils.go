@@ -61,17 +61,24 @@ func APIURL(uuid string, labels []string, env string) string {
 		base = "http://test.api.ft.com/"
 	}
 
-	for _, label := range labels {
-		switch strings.ToLower(label) {
-		case "person":
-			return base + "people/" + uuid
-		case "organisation", "company", "publiccompany", "privatecompany":
-			return base + "organisations/" + uuid
-		case "brand":
-			return base + "brands/" + uuid
-		}
+	allLower(labels)
+
+	path := ""
+	for t := mostSpecific(labels); t != "" && path == ""; t = ParentType(t) {
+		path = apiPaths[t]
 	}
-	return base + "things/" + uuid
+	if path == "" {
+		// TODO: I don't thing we should default to this, but I kept it
+		// for compatability and because this function can't return an error
+		path = "things"
+	}
+	return base + path + "/"
+}
+
+func allLower(all []string) {
+	for i, s := range all {
+		all[i] = strings.ToLower(s)
+	}
 }
 
 // IDURL - Adds the appropriate prefix e.g http://api.ft.com/things/
