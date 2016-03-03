@@ -18,9 +18,40 @@ var parentTypes = map[string]string{
 	"section":        "classification",
 }
 
+var apiPaths = map[string]string{
+	"organisation": "organisations",
+	"person":       "people",
+	"brand":        "brands",
+	"thing":        "things",
+}
+
 // ParentType returns the immediate parent type for a given Type
 func ParentType(t string) string {
 	return parentTypes[t]
+}
+
+func isDescendent(descendent, ancestor string) bool {
+	for t := descendent; t != ""; t = ParentType(t) {
+		if t == ancestor {
+			return true
+		}
+	}
+	return false
+}
+
+// returns the most specific from a list of types in an hierarchy
+// behaviour is undefined if any of the types are siblings. // TODO: make this an error?
+func mostSpecific(types []string) (result string) {
+	if len(types) == 0 {
+		return ""
+	}
+	result = types[0]
+	for _, t := range types[1:] {
+		if isDescendent(t, result) {
+			result = t
+		}
+	}
+	return
 }
 
 // APIURL - Establishes the ApiURL given a whether the Label is a Person, Organisation or Company (Public or Private)
