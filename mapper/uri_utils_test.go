@@ -9,13 +9,13 @@ import (
 
 var thingLabels = []string{"Thing"}
 var conceptLabels = append(thingLabels, "Concept")
-var brandLabels = append(thingLabels, "Brand")
+var brandLabels = append(conceptLabels, "Brand")
 var personLabels = append(conceptLabels, "Person")
 var organisationLabels = append(conceptLabels, "Organisation")
 var companyLabels = append(organisationLabels, "Company")
 var publicCompanyLabels = append(companyLabels, "PublicCompany")
 var privateCompanyLabels = append(companyLabels, "PrivateCompany")
-var classificationLabels = append(thingLabels, "Classification")
+var classificationLabels = append(conceptLabels, "Classification")
 var subjectLabels = append(classificationLabels, "Subject")
 var sectionLabels = append(classificationLabels, "Section")
 var topicLabels = append(conceptLabels, "Topic")
@@ -23,15 +23,18 @@ var topicLabels = append(conceptLabels, "Topic")
 var baseURI = "http://www.ft.com/ontology/"
 var env = "prod"
 var envTest = "test"
-var personURIs = []string{baseURI + "person/Person"}
-var brandURIs = []string{baseURI + "product/Brand"}
-var organisationURIs = []string{baseURI + "organisation/Organisation"}
-var companyURIs = append(organisationURIs, baseURI+"company/Company")
-var publicCompanyURIs = append(companyURIs, baseURI+"company/PublicCompany")
-var privateCompanyURIs = append(companyURIs, baseURI+"company/PrivateCompany")
-var subjectURIs = []string{baseURI + "Subject"}
-var sectionURIs = []string{baseURI + "Section"}
-var topicURIs = []string{baseURI + "Topic"}
+var thingURIs = []string{baseURI + "core/Thing"}
+var conceptURIs = append(thingURIs, baseURI + "concept/Concept")
+var classificationURIs = append(conceptURIs, baseURI + "classification/Classification")
+var personURIs = append(conceptURIs, baseURI + "person/Person")
+var brandURIs = append(conceptURIs, baseURI + "product/Brand")
+var organisationURIs = append(conceptURIs, baseURI + "organisation/Organisation")
+var companyURIs = append(organisationURIs, baseURI + "company/Company")
+var publicCompanyURIs = append(companyURIs, baseURI + "company/PublicCompany")
+var privateCompanyURIs = append(companyURIs, baseURI + "company/PrivateCompany")
+var subjectURIs = append(classificationURIs, baseURI + "Subject")
+var sectionURIs = append(classificationURIs, baseURI + "Section")
+var topicURIs = append(conceptURIs,baseURI + "Topic")
 
 var baseAPIURL = "http://api.ft.com/"
 var thingAPIURLRegex = baseAPIURL + "things/[w-]*"
@@ -162,7 +165,7 @@ func TestMostSpecific(t *testing.T) {
 			ErrNotHierarchy,
 		},
 	} {
-		ms, err := MostSpecific(t.input)
+		ms, err := mostSpecific(t.input)
 		assert.Equal(t.expected, ms)
 		assert.Equal(t.err, err)
 	}
@@ -214,7 +217,7 @@ func caseMixer(toMixUp []string) (mixedUp []string) {
 
 func mixUpCase(toMixUp string) (mixedUp string) {
 	for idx, rune := range toMixUp {
-		if idx%2 == 0 {
+		if idx % 2 == 0 {
 			if unicode.IsUpper(rune) {
 				rune = unicode.ToLower(rune)
 			} else {

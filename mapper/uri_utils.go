@@ -2,6 +2,7 @@ package mapper
 
 import (
 	"strings"
+	"log"
 )
 
 var apiPaths = map[string]string{
@@ -12,6 +13,9 @@ var apiPaths = map[string]string{
 }
 
 var typeURIs = map[string]string{
+	"thing":         "http://www.ft.com/ontology/core/Thing",
+	"concept":         "http://www.ft.com/ontology/concept/Concept",
+	"classification":         "http://www.ft.com/ontology/classification/Classification",
 	"person":         "http://www.ft.com/ontology/person/Person",
 	"organisation":   "http://www.ft.com/ontology/organisation/Organisation",
 	"company":        "http://www.ft.com/ontology/company/Company",
@@ -33,7 +37,7 @@ func APIURL(uuid string, labels []string, env string) string {
 	allLower(labels)
 
 	path := ""
-	mostSpecific, err := MostSpecific(labels)
+	mostSpecific, err := mostSpecific(labels)
 	if err == nil {
 		for t := mostSpecific; t != "" && path == ""; t = ParentType(t) {
 			path = apiPaths[t]
@@ -55,7 +59,12 @@ func IDURL(uuid string) string {
 // TypeURIs - Builds up the type URI based on type e.g http://www.ft.com/ontology/Person
 func TypeURIs(labels []string) []string {
 	var results []string
-	for _, label := range labels {
+	sorted, err := SortTypes(labels)
+	if err != nil {
+		log.Printf("ERROR - %v", err)
+		return []string{}
+	}
+	for _, label := range sorted {
 		uri := typeURIs[strings.ToLower(label)]
 		if uri != "" {
 			results = append(results, uri)

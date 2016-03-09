@@ -9,7 +9,7 @@ import (
 var parentTypes = map[string]string{
 	"thing":          "", // this is here to enable iterating over map keys to get all types
 	"concept":        "thing",
-	"classification": "thing", //TODO: Guy isn't sure whether this should be Concept
+	"classification": "concept",
 	"person":         "concept",
 	"organisation":   "concept",
 	"company":        "organisation",
@@ -18,6 +18,7 @@ var parentTypes = map[string]string{
 	"brand":          "concept",
 	"subject":        "classification",
 	"section":        "classification",
+	"topic":        "concept",
 }
 
 // ParentType returns the immediate parent type for a given Type
@@ -36,7 +37,7 @@ func isDescendent(descendent, ancestor string) bool {
 
 // MostSpecific returns the most specific from a list of types in an hierarchy
 // behaviour is undefined if any of the types are siblings.
-func MostSpecific(types []string) (string, error) {
+func mostSpecific(types []string) (string, error) {
 	if len(types) == 0 {
 		return "", errors.New("no types supplied")
 	}
