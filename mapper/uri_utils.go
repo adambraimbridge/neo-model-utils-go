@@ -29,7 +29,6 @@ var typeURIs = map[string]string{
 
 // APIURL - Establishes the ApiURL given a whether the Label is a Person, Organisation or Company (Public or Private)
 func APIURL(uuid string, labels []string, env string) string {
-	log.Printf("uuid %s, labels %v", uuid, labels)
 	base := "http://api.ft.com/"
 	if env == "test" {
 		base = "http://test.api.ft.com/"
@@ -39,7 +38,6 @@ func APIURL(uuid string, labels []string, env string) string {
 
 	path := ""
 	mostSpecific, err := mostSpecific(labels)
-	log.Printf("MOST SPECIFIC %v", mostSpecific)
 	if err == nil {
 		for t := mostSpecific; t != "" && path == ""; t = ParentType(t) {
 			path = apiPaths[t]
