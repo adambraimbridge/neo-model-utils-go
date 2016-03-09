@@ -59,21 +59,16 @@ func MostSpecific(types []string) (string, error) {
 	if len(types) == 0 {
 		return "", errors.New("no types supplied")
 	}
-	result := types[0]
-	for _, t := range types[1:] {
-		if isDescendent(t, result) {
-			result = t
-		}
-		if !isDescendent(result, t) {
-			return "", ErrNotHierarchy
-		}
+	sorted, err := SortTypes(types)
+	if err != nil {
+		return "", err
 	}
-	return result, nil
+	return sorted[len(sorted)-1], nil
 }
 
 var ErrNotHierarchy = errors.New("provided types are not a consistent hierarchy")
 
-// SortTypes sorts the given types from most specific to least specific
+// SortTypes sorts the given types from least specific to most specific
 func SortTypes(types []string) ([]string, error) {
 	ts := &typeSorter{types: make([]string, len(types))}
 	copy(ts.types, types)

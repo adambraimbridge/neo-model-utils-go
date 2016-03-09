@@ -132,6 +132,42 @@ func TestInsensitivePrivateCompanyTypeURIs(t *testing.T) {
 	assert.New(t).EqualValues(privateCompanyURIs, TypeURIs(neoLabels))
 }
 
+func TestMostSpecific(t *testing.T) {
+	assert := assert.New(t)
+
+	for _, t := range []struct {
+		input    []string
+		expected string
+		err      error
+	}{
+		{
+			[]string{"Organisation"},
+			"Organisation",
+			nil,
+		}, {
+			[]string{"Organisation", "PublicCompany", "Company"},
+			"PublicCompany",
+			nil,
+		}, {
+			[]string{"PublicCompany", "Organisation"},
+			"PublicCompany",
+			nil,
+		}, {
+			[]string{"Organisation", "PublicCompany", "PrivateCompany", "Company"},
+			"",
+			ErrNotHierarchy,
+		}, {
+			[]string{"zzzzzz", "yyyyyy"},
+			"",
+			ErrNotHierarchy,
+		},
+	} {
+		ms, err := MostSpecific(t.input)
+		assert.Equal(t.expected, ms)
+		assert.Equal(t.err, err)
+	}
+}
+
 func TestTypeSorter(t *testing.T) {
 	assert := assert.New(t)
 
