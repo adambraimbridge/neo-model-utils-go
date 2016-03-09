@@ -132,6 +132,42 @@ func TestInsensitivePrivateCompanyTypeURIs(t *testing.T) {
 	assert.New(t).EqualValues(privateCompanyURIs, TypeURIs(neoLabels))
 }
 
+func TestTypeSorter(t *testing.T) {
+	assert := assert.New(t)
+
+	for _, t := range []struct {
+		input    []string
+		expected []string
+		err      error
+	}{
+		{
+			[]string{"Organisation"},
+			[]string{"Organisation"},
+			nil,
+		}, {
+			[]string{"Organisation", "PublicCompany", "Company"},
+			[]string{"Organisation", "Company", "PublicCompany"},
+			nil,
+		}, {
+			[]string{"PublicCompany", "Organisation"},
+			[]string{"Organisation", "PublicCompany"},
+			nil,
+		}, {
+			[]string{"Organisation", "PublicCompany", "PrivateCompany", "Company"},
+			[]string{"Organisation", "PublicCompany", "PrivateCompany", "Company"},
+			ErrNotHierarchy,
+		}, {
+			[]string{"zzzzzz", "yyyyyy"},
+			[]string{"zzzzzz", "yyyyyy"},
+			ErrNotHierarchy,
+		},
+	} {
+		sorted, err := SortTypes(t.input)
+		assert.Equal(t.expected, sorted)
+		assert.Equal(t.err, err)
+	}
+}
+
 func caseMixer(toMixUp []string) (mixedUp []string) {
 	mixedUp = toMixUp
 	for idx := range mixedUp {

@@ -2,6 +2,7 @@ package mapper
 
 import (
 	"errors"
+	"sort"
 	"strings"
 )
 
@@ -63,8 +64,49 @@ func MostSpecific(types []string) (string, error) {
 		if isDescendent(t, result) {
 			result = t
 		}
+		if !isDescendent(result, t) {
+			return "", ErrNotHierarchy
+		}
 	}
 	return result, nil
+}
+
+var ErrNotHierarchy = errors.New("provided types are not a consistent hierarchy")
+
+// SortTypes sorts the given types from most specific to least specific
+func SortTypes(types []string) ([]string, error) {
+	ts := &typeSorter{types: make([]string, len(types))}
+	copy(ts.types, types)
+	sort.Sort(ts)
+	if ts.invalid {
+		return types, ErrNotHierarchy
+	}
+	return ts.types, nil
+}
+
+type typeSorter struct {
+	types   []string
+	invalid bool
+}
+
+func (ts *typeSorter) Len() int {
+	return len(ts.types)
+}
+
+func (ts *typeSorter) Less(a, b int) bool {
+	at := strings.ToLower(ts.types[a])
+	bt := strings.ToLower(ts.types[b])
+	if isDescendent(bt, at) {
+		return true
+	}
+	if !isDescendent(at, bt) {
+		ts.invalid = true
+	}
+	return false
+}
+
+func (ts *typeSorter) Swap(a, b int) {
+	ts.types[a], ts.types[b] = ts.types[b], ts.types[a]
 }
 
 // APIURL - Establishes the ApiURL given a whether the Label is a Person, Organisation or Company (Public or Private)
