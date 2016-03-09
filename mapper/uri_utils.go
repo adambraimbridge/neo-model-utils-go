@@ -1,8 +1,8 @@
 package mapper
 
 import (
-	"strings"
 	"log"
+	"strings"
 )
 
 var apiPaths = map[string]string{
@@ -13,9 +13,9 @@ var apiPaths = map[string]string{
 }
 
 var typeURIs = map[string]string{
-	"thing":         "http://www.ft.com/ontology/core/Thing",
-	"concept":         "http://www.ft.com/ontology/concept/Concept",
-	"classification":         "http://www.ft.com/ontology/classification/Classification",
+	"thing":          "http://www.ft.com/ontology/core/Thing",
+	"concept":        "http://www.ft.com/ontology/concept/Concept",
+	"classification": "http://www.ft.com/ontology/classification/Classification",
 	"person":         "http://www.ft.com/ontology/person/Person",
 	"organisation":   "http://www.ft.com/ontology/organisation/Organisation",
 	"company":        "http://www.ft.com/ontology/company/Company",

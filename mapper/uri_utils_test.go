@@ -24,17 +24,17 @@ var baseURI = "http://www.ft.com/ontology/"
 var env = "prod"
 var envTest = "test"
 var thingURIs = []string{baseURI + "core/Thing"}
-var conceptURIs = append(thingURIs, baseURI + "concept/Concept")
-var classificationURIs = append(conceptURIs, baseURI + "classification/Classification")
-var personURIs = append(conceptURIs, baseURI + "person/Person")
-var brandURIs = append(conceptURIs, baseURI + "product/Brand")
-var organisationURIs = append(conceptURIs, baseURI + "organisation/Organisation")
-var companyURIs = append(organisationURIs, baseURI + "company/Company")
-var publicCompanyURIs = append(companyURIs, baseURI + "company/PublicCompany")
-var privateCompanyURIs = append(companyURIs, baseURI + "company/PrivateCompany")
-var subjectURIs = append(classificationURIs, baseURI + "Subject")
-var sectionURIs = append(classificationURIs, baseURI + "Section")
-var topicURIs = append(conceptURIs,baseURI + "Topic")
+var conceptURIs = append(thingURIs, baseURI+"concept/Concept")
+var classificationURIs = append(conceptURIs, baseURI+"classification/Classification")
+var personURIs = append(conceptURIs, baseURI+"person/Person")
+var brandURIs = append(conceptURIs, baseURI+"product/Brand")
+var organisationURIs = append(conceptURIs, baseURI+"organisation/Organisation")
+var companyURIs = append(organisationURIs, baseURI+"company/Company")
+var publicCompanyURIs = append(companyURIs, baseURI+"company/PublicCompany")
+var privateCompanyURIs = append(companyURIs, baseURI+"company/PrivateCompany")
+var subjectURIs = append(classificationURIs, baseURI+"Subject")
+var sectionURIs = append(classificationURIs, baseURI+"Section")
+var topicURIs = append(conceptURIs, baseURI+"Topic")
 
 var baseAPIURL = "http://api.ft.com/"
 var thingAPIURLRegex = baseAPIURL + "things/[w-]*"
@@ -217,7 +217,7 @@ func caseMixer(toMixUp []string) (mixedUp []string) {
 
 func mixUpCase(toMixUp string) (mixedUp string) {
 	for idx, rune := range toMixUp {
-		if idx % 2 == 0 {
+		if idx%2 == 0 {
 			if unicode.IsUpper(rune) {
 				rune = unicode.ToLower(rune)
 			} else {
