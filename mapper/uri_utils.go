@@ -1,6 +1,7 @@
 package mapper
 
 import (
+	"errors"
 	"strings"
 )
 
@@ -51,19 +52,19 @@ func isDescendent(descendent, ancestor string) bool {
 	return false
 }
 
-// returns the most specific from a list of types in an hierarchy
-// behaviour is undefined if any of the types are siblings. // TODO: make this an error?
-func mostSpecific(types []string) (result string) {
+// MostSpecific returns the most specific from a list of types in an hierarchy
+// behaviour is undefined if any of the types are siblings.
+func MostSpecific(types []string) (string, error) {
 	if len(types) == 0 {
-		return ""
+		return "", errors.New("no types supplied")
 	}
-	result = types[0]
+	result := types[0]
 	for _, t := range types[1:] {
 		if isDescendent(t, result) {
 			result = t
 		}
 	}
-	return
+	return result, nil
 }
 
 // APIURL - Establishes the ApiURL given a whether the Label is a Person, Organisation or Company (Public or Private)
@@ -76,8 +77,11 @@ func APIURL(uuid string, labels []string, env string) string {
 	allLower(labels)
 
 	path := ""
-	for t := mostSpecific(labels); t != "" && path == ""; t = ParentType(t) {
-		path = apiPaths[t]
+	mostSpecific, err := MostSpecific(labels)
+	if err == nil {
+		for t := mostSpecific; t != "" && path == ""; t = ParentType(t) {
+			path = apiPaths[t]
+		}
 	}
 	if path == "" {
 		// TODO: I don't thing we should default to this, but I kept it
