@@ -1,8 +1,31 @@
 package mapper
 
 import (
+	"log"
 	"strings"
 )
+
+var apiPaths = map[string]string{
+	"organisation": "organisations",
+	"person":       "people",
+	"brand":        "brands",
+	"thing":        "things",
+}
+
+var typeURIs = map[string]string{
+	"thing":          "http://www.ft.com/ontology/core/Thing",
+	"concept":        "http://www.ft.com/ontology/concept/Concept",
+	"classification": "http://www.ft.com/ontology/classification/Classification",
+	"person":         "http://www.ft.com/ontology/person/Person",
+	"organisation":   "http://www.ft.com/ontology/organisation/Organisation",
+	"company":        "http://www.ft.com/ontology/company/Company",
+	"publiccompany":  "http://www.ft.com/ontology/company/PublicCompany",
+	"privatecompany": "http://www.ft.com/ontology/company/PrivateCompany",
+	"brand":          "http://www.ft.com/ontology/product/Brand",
+	"subject":        "http://www.ft.com/ontology/Subject",
+	"section":        "http://www.ft.com/ontology/Section",
+	"topic":          "http://www.ft.com/ontology/Topic",
+}
 
 // APIURL - Establishes the ApiURL given a whether the Label is a Person, Organisation or Company (Public or Private)
 func APIURL(uuid string, labels []string, env string) string {
@@ -11,17 +34,21 @@ func APIURL(uuid string, labels []string, env string) string {
 		base = "http://test.api.ft.com/"
 	}
 
-	for _, label := range labels {
-		switch strings.ToLower(label) {
-		case "person":
-			return base + "people/" + uuid
-		case "organisation", "company", "publiccompany", "privatecompany":
-			return base + "organisations/" + uuid
-		case "brand":
-			return base + "brands/" + uuid
+	allLower(labels)
+
+	path := ""
+	mostSpecific, err := mostSpecific(labels)
+	if err == nil {
+		for t := mostSpecific; t != "" && path == ""; t = ParentType(t) {
+			path = apiPaths[t]
 		}
 	}
-	return base + "things/" + uuid
+	if path == "" {
+		// TODO: I don't thing we should default to this, but I kept it
+		// for compatability and because this function can't return an error
+		path = "things"
+	}
+	return base + path + "/" + uuid
 }
 
 // IDURL - Adds the appropriate prefix e.g http://api.ft.com/things/
@@ -32,27 +59,15 @@ func IDURL(uuid string) string {
 // TypeURIs - Builds up the type URI based on type e.g http://www.ft.com/ontology/Person
 func TypeURIs(labels []string) []string {
 	var results []string
-	base := "http://www.ft.com/ontology/"
-	for _, label := range labels {
-		switch strings.ToLower(label) {
-		case "person":
-			results = append(results, base+"person/Person")
-		case "organisation":
-			results = append(results, base+"organisation/Organisation")
-		case "company":
-			results = append(results, base+"company/Company")
-		case "publiccompany":
-			results = append(results, base+"company/PublicCompany")
-		case "privatecompany":
-			results = append(results, base+"company/PrivateCompany")
-		case "brand":
-			results = append(results, base+"product/Brand")
-		case "subject":
-			results = append(results, base+"Subject")
-		case "section":
-			results = append(results, base+"Section")
-		case "topic":
-			results = append(results, base+"Topic")
+	sorted, err := SortTypes(labels)
+	if err != nil {
+		log.Printf("ERROR - %v", err)
+		return []string{}
+	}
+	for _, label := range sorted {
+		uri := typeURIs[strings.ToLower(label)]
+		if uri != "" {
+			results = append(results, uri)
 		}
 	}
 	return results

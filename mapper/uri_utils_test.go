@@ -9,13 +9,13 @@ import (
 
 var thingLabels = []string{"Thing"}
 var conceptLabels = append(thingLabels, "Concept")
-var brandLabels = append(thingLabels, "Brand")
+var brandLabels = append(conceptLabels, "Brand")
 var personLabels = append(conceptLabels, "Person")
 var organisationLabels = append(conceptLabels, "Organisation")
 var companyLabels = append(organisationLabels, "Company")
 var publicCompanyLabels = append(companyLabels, "PublicCompany")
 var privateCompanyLabels = append(companyLabels, "PrivateCompany")
-var classificationLabels = append(thingLabels, "Classification")
+var classificationLabels = append(conceptLabels, "Classification")
 var subjectLabels = append(classificationLabels, "Subject")
 var sectionLabels = append(classificationLabels, "Section")
 var topicLabels = append(conceptLabels, "Topic")
@@ -23,21 +23,26 @@ var topicLabels = append(conceptLabels, "Topic")
 var baseURI = "http://www.ft.com/ontology/"
 var env = "prod"
 var envTest = "test"
-var personURIs = []string{baseURI + "person/Person"}
-var brandURIs = []string{baseURI + "product/Brand"}
-var organisationURIs = []string{baseURI + "organisation/Organisation"}
+var thingURIs = []string{baseURI + "core/Thing"}
+var conceptURIs = append(thingURIs, baseURI+"concept/Concept")
+var classificationURIs = append(conceptURIs, baseURI+"classification/Classification")
+var personURIs = append(conceptURIs, baseURI+"person/Person")
+var brandURIs = append(conceptURIs, baseURI+"product/Brand")
+var organisationURIs = append(conceptURIs, baseURI+"organisation/Organisation")
 var companyURIs = append(organisationURIs, baseURI+"company/Company")
 var publicCompanyURIs = append(companyURIs, baseURI+"company/PublicCompany")
 var privateCompanyURIs = append(companyURIs, baseURI+"company/PrivateCompany")
-var subjectURIs = []string{baseURI + "Subject"}
-var sectionURIs = []string{baseURI + "Section"}
-var topicURIs = []string{baseURI + "Topic"}
+var subjectURIs = append(classificationURIs, baseURI+"Subject")
+var sectionURIs = append(classificationURIs, baseURI+"Section")
+var topicURIs = append(conceptURIs, baseURI+"Topic")
+
+var uuid = "92f4ec09-436d-4092-a88c-96f54e34007c"
 
 var baseAPIURL = "http://api.ft.com/"
-var thingAPIURLRegex = baseAPIURL + "things/[w-]*"
-var personAPIURLRegex = baseAPIURL + "people/[w-]*"
-var organisationAPIURLRegex = baseAPIURL + "organisations/[w-]*"
-var brandAPIURLRegex = baseAPIURL + "brands/[w-]*"
+var thingAPIURL = baseAPIURL + "things/" + uuid
+var personAPIURL = baseAPIURL + "people/" + uuid
+var organisationAPIURL = baseAPIURL + "organisations/" + uuid
+var brandAPIURL = baseAPIURL + "brands/" + uuid
 
 func TestTypeURIsForPeople(t *testing.T) {
 	assert.New(t).EqualValues(personURIs, TypeURIs(personLabels))
@@ -76,35 +81,36 @@ func TestTypeURIsForTopic(t *testing.T) {
 }
 
 func TestCompanyAPIURLs(t *testing.T) {
-	neoLabels := []string{"PublicCompany", "PrivateCompany", "Organisation", "Company"}
-	for _, neoLabel := range neoLabels {
-		assert.New(t).Regexp(organisationAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}, env))
-		assert.New(t).Regexp(organisationAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}, env))
-	}
+	neoLabels := []string{"PublicCompany", "Organisation", "Company"}
+	assert.New(t).EqualValues(organisationAPIURL, APIURL(uuid, neoLabels, env))
+	assert.New(t).EqualValues(organisationAPIURL, APIURL(uuid, caseMixer(neoLabels), env))
+}
+
+func TestOrganisationAPIURLs(t *testing.T) {
+	neoLabels := []string{"Organisation", "Concept", "Thing"}
+	assert.New(t).EqualValues(organisationAPIURL, APIURL(uuid, neoLabels, env))
+	assert.New(t).EqualValues(organisationAPIURL, APIURL(uuid, caseMixer(neoLabels), env))
 }
 
 func TestPeopleAPIURLs(t *testing.T) {
 	neoLabels := []string{"Person"}
-	for _, neoLabel := range neoLabels {
-		assert.New(t).Regexp(personAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}, env))
-		assert.New(t).Regexp(personAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}, env))
-	}
+	assert.New(t).EqualValues(personAPIURL, APIURL(uuid, neoLabels, env))
+	assert.New(t).EqualValues(personAPIURL, APIURL(uuid, caseMixer(neoLabels), env))
+
 }
 
 func TestBrandAPIURLs(t *testing.T) {
 	neoLabels := []string{"Brand"}
-	for _, neoLabel := range neoLabels {
-		assert.New(t).Regexp(brandAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}, env))
-		assert.New(t).Regexp(brandAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}, env))
-	}
+	assert.New(t).EqualValues(brandAPIURL, APIURL(uuid, neoLabels, env))
+	assert.New(t).EqualValues(brandAPIURL, APIURL(uuid, caseMixer(neoLabels), env))
+
 }
 
 func TestDefaultAPIURLs(t *testing.T) {
 	neoLabels := []string{"thing", "relationship", "otherPrivateType"}
-	for _, neoLabel := range neoLabels {
-		assert.New(t).Regexp(thingAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{neoLabel}, env))
-		assert.New(t).Regexp(thingAPIURLRegex, APIURL("92f4ec09-436d-4092-a88c-96f54e34007c", []string{mixUpCase(neoLabel)}, env))
-	}
+	assert.New(t).EqualValues(thingAPIURL, APIURL(uuid, neoLabels, env))
+	assert.New(t).EqualValues(thingAPIURL, APIURL(uuid, caseMixer(neoLabels), env))
+
 }
 
 func TestInsensitivePersonTypeURIs(t *testing.T) {
@@ -130,6 +136,78 @@ func TestInsensitivePublicCompanyTypeURIs(t *testing.T) {
 func TestInsensitivePrivateCompanyTypeURIs(t *testing.T) {
 	neoLabels := caseMixer(privateCompanyLabels)
 	assert.New(t).EqualValues(privateCompanyURIs, TypeURIs(neoLabels))
+}
+
+func TestMostSpecific(t *testing.T) {
+	assert := assert.New(t)
+
+	for _, t := range []struct {
+		input    []string
+		expected string
+		err      error
+	}{
+		{
+			[]string{"Organisation"},
+			"Organisation",
+			nil,
+		}, {
+			[]string{"Organisation", "PublicCompany", "Company"},
+			"PublicCompany",
+			nil,
+		}, {
+			[]string{"PublicCompany", "Organisation"},
+			"PublicCompany",
+			nil,
+		}, {
+			[]string{"Organisation", "PublicCompany", "PrivateCompany", "Company"},
+			"",
+			ErrNotHierarchy,
+		}, {
+			[]string{"zzzzzz", "yyyyyy"},
+			"",
+			ErrNotHierarchy,
+		},
+	} {
+		ms, err := mostSpecific(t.input)
+		assert.Equal(t.expected, ms)
+		assert.Equal(t.err, err)
+	}
+}
+
+func TestTypeSorter(t *testing.T) {
+	assert := assert.New(t)
+
+	for _, t := range []struct {
+		input    []string
+		expected []string
+		err      error
+	}{
+		{
+			[]string{"Organisation"},
+			[]string{"Organisation"},
+			nil,
+		}, {
+			[]string{"Organisation", "PublicCompany", "Company"},
+			[]string{"Organisation", "Company", "PublicCompany"},
+			nil,
+		}, {
+			[]string{"PublicCompany", "Organisation"},
+			[]string{"Organisation", "PublicCompany"},
+			nil,
+		}, {
+			[]string{"Organisation", "PublicCompany", "PrivateCompany", "Company"},
+			[]string{"Organisation", "PublicCompany", "PrivateCompany", "Company"},
+			ErrNotHierarchy,
+		}, {
+			[]string{"zzzzzz", "yyyyyy"},
+			[]string{"zzzzzz", "yyyyyy"},
+			ErrNotHierarchy,
+		},
+	} {
+		sorted, err := SortTypes(t.input)
+		assert.Equal(t.expected, sorted)
+		assert.Equal(t.err, err)
+	}
 }
 
 func caseMixer(toMixUp []string) (mixedUp []string) {
