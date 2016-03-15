@@ -19,6 +19,7 @@ var parentTypes = map[string]string{
 	"subject":        "classification",
 	"section":        "classification",
 	"topic":          "concept",
+	"content":        "thing",
 }
 
 // ParentType returns the immediate parent type for a given Type

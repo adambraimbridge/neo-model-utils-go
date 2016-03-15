@@ -42,6 +42,7 @@ var baseAPIURL = "http://api.ft.com/"
 var thingAPIURL = baseAPIURL + "things/" + uuid
 var personAPIURL = baseAPIURL + "people/" + uuid
 var organisationAPIURL = baseAPIURL + "organisations/" + uuid
+var contentAPIURL = baseAPIURL + "content/" + uuid
 var brandAPIURL = baseAPIURL + "brands/" + uuid
 
 func TestTypeURIsForPeople(t *testing.T) {
@@ -78,6 +79,12 @@ func TestTypeURIsForSection(t *testing.T) {
 
 func TestTypeURIsForTopic(t *testing.T) {
 	assert.New(t).EqualValues(topicURIs, TypeURIs(topicLabels))
+}
+
+func TestContentAPIURLs(t *testing.T) {
+	neoLabels := []string{"Content"}
+	assert.New(t).EqualValues(contentAPIURL, APIURL(uuid, neoLabels, env))
+	assert.New(t).EqualValues(contentAPIURL, APIURL(uuid, caseMixer(neoLabels), env))
 }
 
 func TestCompanyAPIURLs(t *testing.T) {
@@ -193,6 +200,10 @@ func TestTypeSorter(t *testing.T) {
 		}, {
 			[]string{"PublicCompany", "Organisation"},
 			[]string{"Organisation", "PublicCompany"},
+			nil,
+		}, {
+			[]string{"Content", "Thing"},
+			[]string{"Thing", "Content"},
 			nil,
 		}, {
 			[]string{"Organisation", "PublicCompany", "PrivateCompany", "Company"},

@@ -10,6 +10,7 @@ var apiPaths = map[string]string{
 	"person":       "people",
 	"brand":        "brands",
 	"thing":        "things",
+	"content":      "content",
 }
 
 var typeURIs = map[string]string{
