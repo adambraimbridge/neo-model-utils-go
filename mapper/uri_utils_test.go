@@ -12,6 +12,7 @@ var conceptLabels = append(thingLabels, "Concept")
 var brandLabels = append(conceptLabels, "Brand")
 var personLabels = append(conceptLabels, "Person")
 var organisationLabels = append(conceptLabels, "Organisation")
+var membershipLabels = append(conceptLabels, "Membership")
 var companyLabels = append(organisationLabels, "Company")
 var publicCompanyLabels = append(companyLabels, "PublicCompany")
 var privateCompanyLabels = append(companyLabels, "PrivateCompany")
@@ -29,6 +30,7 @@ var classificationURIs = append(conceptURIs, baseURI+"classification/Classificat
 var personURIs = append(conceptURIs, baseURI+"person/Person")
 var brandURIs = append(conceptURIs, baseURI+"product/Brand")
 var organisationURIs = append(conceptURIs, baseURI+"organisation/Organisation")
+var membershipURIs = append(conceptURIs, baseURI+"organisation/Membership")
 var companyURIs = append(organisationURIs, baseURI+"company/Company")
 var publicCompanyURIs = append(companyURIs, baseURI+"company/PublicCompany")
 var privateCompanyURIs = append(companyURIs, baseURI+"company/PrivateCompany")
@@ -50,6 +52,10 @@ func TestTypeURIsForPeople(t *testing.T) {
 
 func TestTypeURIsForOrganisations(t *testing.T) {
 	assert.New(t).EqualValues(organisationURIs, TypeURIs(organisationLabels))
+}
+
+func TestTypeURIsForMemberships(t *testing.T) {
+	assert.New(t).EqualValues(membershipURIs, TypeURIs(membershipLabels))
 }
 
 func TestTypeURIsForCompany(t *testing.T) {
