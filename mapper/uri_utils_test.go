@@ -9,6 +9,8 @@ import (
 
 var thingLabels = []string{"Thing"}
 var conceptLabels = append(thingLabels, "Concept")
+var roleLabels = append(thingLabels, "Role")
+var boardRoleLabels = append(roleLabels, "BoardRole")
 var brandLabels = append(conceptLabels, "Brand")
 var personLabels = append(conceptLabels, "Person")
 var organisationLabels = append(conceptLabels, "Organisation")
@@ -26,6 +28,8 @@ var env = "prod"
 var envTest = "test"
 var thingURIs = []string{baseURI + "core/Thing"}
 var conceptURIs = append(thingURIs, baseURI+"concept/Concept")
+var roleURIs = append(thingURIs, baseURI+"organisation/Role")
+var boardRoleURIs = append(roleURIs, baseURI+"organisation/BoardRole")
 var classificationURIs = append(conceptURIs, baseURI+"classification/Classification")
 var personURIs = append(conceptURIs, baseURI+"person/Person")
 var brandURIs = append(conceptURIs, baseURI+"product/Brand")
@@ -56,6 +60,14 @@ func TestTypeURIsForOrganisations(t *testing.T) {
 
 func TestTypeURIsForMemberships(t *testing.T) {
 	assert.New(t).EqualValues(membershipURIs, TypeURIs(membershipLabels))
+}
+
+func TestTypeURIsForRoles(t *testing.T) {
+	assert.New(t).EqualValues(roleURIs, TypeURIs(roleLabels))
+}
+
+func TestTypeURIsForBoardRoles(t *testing.T) {
+	assert.New(t).EqualValues(boardRoleURIs, TypeURIs(boardRoleLabels))
 }
 
 func TestTypeURIsForCompany(t *testing.T) {
