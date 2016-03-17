@@ -16,9 +16,12 @@ var apiPaths = map[string]string{
 var typeURIs = map[string]string{
 	"thing":          "http://www.ft.com/ontology/core/Thing",
 	"concept":        "http://www.ft.com/ontology/concept/Concept",
+	"role":           "http://www.ft.com/ontology/organisation/Role",
+	"boardrole":      "http://www.ft.com/ontology/organisation/BoardRole",
 	"classification": "http://www.ft.com/ontology/classification/Classification",
 	"person":         "http://www.ft.com/ontology/person/Person",
 	"organisation":   "http://www.ft.com/ontology/organisation/Organisation",
+	"membership":     "http://www.ft.com/ontology/organisation/Membership",
 	"company":        "http://www.ft.com/ontology/company/Company",
 	"publiccompany":  "http://www.ft.com/ontology/company/PublicCompany",
 	"privatecompany": "http://www.ft.com/ontology/company/PrivateCompany",
