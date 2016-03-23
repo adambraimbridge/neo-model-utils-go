@@ -21,7 +21,9 @@ var privateCompanyLabels = append(companyLabels, "PrivateCompany")
 var classificationLabels = append(conceptLabels, "Classification")
 var subjectLabels = append(classificationLabels, "Subject")
 var sectionLabels = append(classificationLabels, "Section")
+var genreLabels = append(classificationLabels, "Genre")
 var topicLabels = append(conceptLabels, "Topic")
+var locationLabels = append(conceptLabels, "Location")
 
 var baseURI = "http://www.ft.com/ontology/"
 var env = "prod"
@@ -40,7 +42,9 @@ var publicCompanyURIs = append(companyURIs, baseURI+"company/PublicCompany")
 var privateCompanyURIs = append(companyURIs, baseURI+"company/PrivateCompany")
 var subjectURIs = append(classificationURIs, baseURI+"Subject")
 var sectionURIs = append(classificationURIs, baseURI+"Section")
+var genreURIs = append(classificationURIs, baseURI+"Genre")
 var topicURIs = append(conceptURIs, baseURI+"Topic")
+var locationURIs = append(conceptURIs, baseURI+"Location")
 
 var uuid = "92f4ec09-436d-4092-a88c-96f54e34007c"
 
@@ -95,8 +99,16 @@ func TestTypeURIsForSection(t *testing.T) {
 	assert.New(t).EqualValues(sectionURIs, TypeURIs(sectionLabels))
 }
 
+func TestTypeURIsForGenre(t *testing.T) {
+	assert.New(t).EqualValues(genreURIs, TypeURIs(genreLabels))
+}
+
 func TestTypeURIsForTopic(t *testing.T) {
 	assert.New(t).EqualValues(topicURIs, TypeURIs(topicLabels))
+}
+
+func TestTypeURIsForLocation(t *testing.T) {
+	assert.New(t).EqualValues(locationURIs, TypeURIs(locationLabels))
 }
 
 func TestContentAPIURLs(t *testing.T) {
