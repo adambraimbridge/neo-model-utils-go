@@ -19,6 +19,7 @@ var companyLabels = append(organisationLabels, "Company")
 var publicCompanyLabels = append(companyLabels, "PublicCompany")
 var privateCompanyLabels = append(companyLabels, "PrivateCompany")
 var classificationLabels = append(conceptLabels, "Classification")
+var industryClassificationLabels = append(classificationLabels, "IndustryClassification")
 var subjectLabels = append(classificationLabels, "Subject")
 var sectionLabels = append(classificationLabels, "Section")
 var genreLabels = append(classificationLabels, "Genre")
@@ -33,6 +34,7 @@ var conceptURIs = append(thingURIs, baseURI+"concept/Concept")
 var roleURIs = append(thingURIs, baseURI+"organisation/Role")
 var boardRoleURIs = append(roleURIs, baseURI+"organisation/BoardRole")
 var classificationURIs = append(conceptURIs, baseURI+"classification/Classification")
+var industryClassificationURIs = append(classificationURIs, baseURI+"industry/IndustryClassification")
 var personURIs = append(conceptURIs, baseURI+"person/Person")
 var brandURIs = append(conceptURIs, baseURI+"product/Brand")
 var organisationURIs = append(conceptURIs, baseURI+"organisation/Organisation")
@@ -115,6 +117,10 @@ func TestContentAPIURLs(t *testing.T) {
 	neoLabels := []string{"Content"}
 	assert.New(t).EqualValues(contentAPIURL, APIURL(uuid, neoLabels, env))
 	assert.New(t).EqualValues(contentAPIURL, APIURL(uuid, caseMixer(neoLabels), env))
+}
+
+func TestTypeURIsForIndustryClassification(t *testing.T) {
+	assert.New(t).EqualValues(industryClassificationURIs, TypeURIs(industryClassificationLabels))
 }
 
 func TestCompanyAPIURLs(t *testing.T) {
