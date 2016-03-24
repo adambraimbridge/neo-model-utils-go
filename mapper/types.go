@@ -21,6 +21,8 @@ var parentTypes = map[string]string{
 	"brand":          "concept",
 	"subject":        "classification",
 	"section":        "classification",
+	"genre":          "classification",
+	"location":       "concept",
 	"topic":          "concept",
 	"content":        "thing",
 }
