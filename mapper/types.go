@@ -18,7 +18,7 @@ var parentTypes = map[string]string{
 	"company":                "organisation",
 	"publiccompany":          "company",
 	"privatecompany":         "company",
-	"brand":                  "concept",
+	"brand":                  "classification",
 	"subject":                "classification",
 	"section":                "classification",
 	"genre":                  "classification",
