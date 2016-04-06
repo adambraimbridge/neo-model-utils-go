@@ -3,26 +3,25 @@ package mapper
 import (
 	"errors"
 	"sort"
-	"strings"
 )
 
 var parentTypes = map[string]string{
-	"thing":          "", // this is here to enable iterating over map keys to get all types
-	"concept":        "thing",
-	"role":           "thing",
-	"boardrole":      "role",
-	"classification": "concept",
-	"person":         "concept",
-	"organisation":   "concept",
-	"membership":     "concept",
-	"company":        "organisation",
-	"publiccompany":  "company",
-	"privatecompany": "company",
-	"brand":          "concept",
-	"subject":        "classification",
-	"section":        "classification",
-	"topic":          "concept",
-	"content":        "thing",
+	"Thing":          "", // this is here to enable iterating over map keys to get all types
+	"Concept":        "Thing",
+	"Role":           "Thing",
+	"BoardRole":      "Role",
+	"Classification": "Concept",
+	"Person":         "Concept",
+	"Organisation":   "Concept",
+	"Membership":     "Concept",
+	"Company":        "Organisation",
+	"PublicCompany":  "Company",
+	"PrivateCompany": "Company",
+	"Brand":          "Concept",
+	"Subject":        "Classification",
+	"Section":        "Classification",
+	"Topic":          "Concept",
+	"Content":        "Thing",
 }
 
 // ParentType returns the immediate parent type for a given Type
@@ -75,8 +74,8 @@ func (ts *typeSorter) Len() int {
 }
 
 func (ts *typeSorter) Less(a, b int) bool {
-	at := strings.ToLower(ts.types[a])
-	bt := strings.ToLower(ts.types[b])
+	at := ts.types[a]
+	bt := ts.types[b]
 	if isDescendent(bt, at) {
 		return true
 	}
@@ -88,10 +87,4 @@ func (ts *typeSorter) Less(a, b int) bool {
 
 func (ts *typeSorter) Swap(a, b int) {
 	ts.types[a], ts.types[b] = ts.types[b], ts.types[a]
-}
-
-func allLower(all []string) {
-	for i, s := range all {
-		all[i] = strings.ToLower(s)
-	}
 }
