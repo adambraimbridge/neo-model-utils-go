@@ -1,6 +1,7 @@
 package mapper
 
 import (
+	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -26,15 +27,19 @@ var companyLabels = allLabelsFor("Company")
 var publicCompanyLabels = allLabelsFor("PublicCompany")
 var privateCompanyLabels = allLabelsFor("PrivateCompany")
 var classificationLabels = allLabelsFor("Classification")
+var industryClassificationLabels = allLabelsFor("IndustryClassification")
 var subjectLabels = allLabelsFor("Subject")
 var sectionLabels = allLabelsFor("Section")
+var genreLabels = allLabelsFor("Genre")
 var topicLabels = allLabelsFor("Topic")
+var locationLabels = allLabelsFor("Location")
 
 var thingURI = "http://www.ft.com/ontology/core/Thing"
 var conceptURI = "http://www.ft.com/ontology/concept/Concept"
 var roleURI = "http://www.ft.com/ontology/organisation/Role"
 var boardRoleURI = "http://www.ft.com/ontology/organisation/BoardRole"
 var classificationURI = "http://www.ft.com/ontology/classification/Classification"
+var industryClassificationURI = "http://www.ft.com/ontology/industry/IndustryClassification"
 var personURI = "http://www.ft.com/ontology/person/Person"
 var brandURI = "http://www.ft.com/ontology/product/Brand"
 var organisationURI = "http://www.ft.com/ontology/organisation/Organisation"
@@ -44,7 +49,9 @@ var publicCompanyURI = "http://www.ft.com/ontology/company/PublicCompany"
 var privateCompanyURI = "http://www.ft.com/ontology/company/PrivateCompany"
 var subjectURI = "http://www.ft.com/ontology/Subject"
 var sectionURI = "http://www.ft.com/ontology/Section"
+var genreURI = "http://www.ft.com/ontology/Genre"
 var topicURI = "http://www.ft.com/ontology/Topic"
+var locationURI = "http://www.ft.com/ontology/Location"
 
 var uuid = "92f4ec09-436d-4092-a88c-96f54e34007c"
 
@@ -91,7 +98,7 @@ func TestTypeURIsForPrivateCompany(t *testing.T) {
 }
 
 func TestTypeURIsForBrand(t *testing.T) {
-	assert.New(t).EqualValues([]string{thingURI, conceptURI, brandURI}, TypeURIs(brandLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, classificationURI, brandURI}, TypeURIs(brandLabels))
 }
 
 func TestTypeURIsForSubject(t *testing.T) {
@@ -102,8 +109,21 @@ func TestTypeURIsForSection(t *testing.T) {
 	assert.New(t).EqualValues([]string{thingURI, conceptURI, classificationURI, sectionURI}, TypeURIs(sectionLabels))
 }
 
+func TestTypeURIsForGenre(t *testing.T) {
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, classificationURI, genreURI}, TypeURIs(genreLabels))
+}
+
 func TestTypeURIsForTopic(t *testing.T) {
 	assert.New(t).EqualValues([]string{thingURI, conceptURI, topicURI}, TypeURIs(topicLabels))
+}
+
+func TestTypeURIsForLocation(t *testing.T) {
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, locationURI}, TypeURIs(locationLabels))
+}
+
+func TestTypeURIsForIndustryClassification(t *testing.T) {
+	log.Printf("labels =%v", industryClassificationLabels)
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, classificationURI, industryClassificationURI}, TypeURIs(industryClassificationLabels))
 }
 
 func TestContentAPIURLs(t *testing.T) {
