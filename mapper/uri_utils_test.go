@@ -15,55 +15,57 @@ func allLabelsFor(label string) []string {
 	return allLabels
 }
 
-var thingLabels = allLabelsFor("Thing")
-var conceptLabels = allLabelsFor("Concept")
-var roleLabels = allLabelsFor("Role")
-var boardRoleLabels = allLabelsFor("BoardRole")
-var brandLabels = allLabelsFor("Brand")
-var personLabels = allLabelsFor("Person")
-var organisationLabels = allLabelsFor("Organisation")
-var membershipLabels = allLabelsFor("Membership")
-var companyLabels = allLabelsFor("Company")
-var publicCompanyLabels = allLabelsFor("PublicCompany")
-var privateCompanyLabels = allLabelsFor("PrivateCompany")
-var classificationLabels = allLabelsFor("Classification")
-var industryClassificationLabels = allLabelsFor("IndustryClassification")
-var subjectLabels = allLabelsFor("Subject")
-var sectionLabels = allLabelsFor("Section")
-var genreLabels = allLabelsFor("Genre")
-var topicLabels = allLabelsFor("Topic")
-var locationLabels = allLabelsFor("Location")
+var (
+	thingLabels                  = allLabelsFor("Thing")
+	conceptLabels                = allLabelsFor("Concept")
+	roleLabels                   = allLabelsFor("Role")
+	boardRoleLabels              = allLabelsFor("BoardRole")
+	brandLabels                  = allLabelsFor("Brand")
+	personLabels                 = allLabelsFor("Person")
+	organisationLabels           = allLabelsFor("Organisation")
+	membershipLabels             = allLabelsFor("Membership")
+	companyLabels                = allLabelsFor("Company")
+	publicCompanyLabels          = allLabelsFor("PublicCompany")
+	privateCompanyLabels         = allLabelsFor("PrivateCompany")
+	classificationLabels         = allLabelsFor("Classification")
+	industryClassificationLabels = allLabelsFor("IndustryClassification")
+	subjectLabels                = allLabelsFor("Subject")
+	sectionLabels                = allLabelsFor("Section")
+	genreLabels                  = allLabelsFor("Genre")
+	topicLabels                  = allLabelsFor("Topic")
+	locationLabels               = allLabelsFor("Location")
 
-var thingURI = "http://www.ft.com/ontology/core/Thing"
-var conceptURI = "http://www.ft.com/ontology/concept/Concept"
-var roleURI = "http://www.ft.com/ontology/organisation/Role"
-var boardRoleURI = "http://www.ft.com/ontology/organisation/BoardRole"
-var classificationURI = "http://www.ft.com/ontology/classification/Classification"
-var industryClassificationURI = "http://www.ft.com/ontology/industry/IndustryClassification"
-var personURI = "http://www.ft.com/ontology/person/Person"
-var brandURI = "http://www.ft.com/ontology/product/Brand"
-var organisationURI = "http://www.ft.com/ontology/organisation/Organisation"
-var membershipURI = "http://www.ft.com/ontology/organisation/Membership"
-var companyURI = "http://www.ft.com/ontology/company/Company"
-var publicCompanyURI = "http://www.ft.com/ontology/company/PublicCompany"
-var privateCompanyURI = "http://www.ft.com/ontology/company/PrivateCompany"
-var subjectURI = "http://www.ft.com/ontology/Subject"
-var sectionURI = "http://www.ft.com/ontology/Section"
-var genreURI = "http://www.ft.com/ontology/Genre"
-var topicURI = "http://www.ft.com/ontology/Topic"
-var locationURI = "http://www.ft.com/ontology/Location"
+	thingURI                  = "http://www.ft.com/ontology/core/Thing"
+	conceptURI                = "http://www.ft.com/ontology/concept/Concept"
+	roleURI                   = "http://www.ft.com/ontology/organisation/Role"
+	boardRoleURI              = "http://www.ft.com/ontology/organisation/BoardRole"
+	classificationURI         = "http://www.ft.com/ontology/classification/Classification"
+	industryClassificationURI = "http://www.ft.com/ontology/industry/IndustryClassification"
+	personURI                 = "http://www.ft.com/ontology/person/Person"
+	brandURI                  = "http://www.ft.com/ontology/product/Brand"
+	organisationURI           = "http://www.ft.com/ontology/organisation/Organisation"
+	membershipURI             = "http://www.ft.com/ontology/organisation/Membership"
+	companyURI                = "http://www.ft.com/ontology/company/Company"
+	publicCompanyURI          = "http://www.ft.com/ontology/company/PublicCompany"
+	privateCompanyURI         = "http://www.ft.com/ontology/company/PrivateCompany"
+	subjectURI                = "http://www.ft.com/ontology/Subject"
+	sectionURI                = "http://www.ft.com/ontology/Section"
+	genreURI                  = "http://www.ft.com/ontology/Genre"
+	topicURI                  = "http://www.ft.com/ontology/Topic"
+	locationURI               = "http://www.ft.com/ontology/Location"
 
-var uuid = "92f4ec09-436d-4092-a88c-96f54e34007c"
+	uuid = "92f4ec09-436d-4092-a88c-96f54e34007c"
 
-var env = "prod"
-var envTest = "test"
+	env     = "prod"
+	envTest = "test"
 
-var baseAPIURL = "http://api.ft.com/"
-var thingAPIURL = baseAPIURL + "things/" + uuid
-var personAPIURL = baseAPIURL + "people/" + uuid
-var organisationAPIURL = baseAPIURL + "organisations/" + uuid
-var contentAPIURL = baseAPIURL + "content/" + uuid
-var brandAPIURL = baseAPIURL + "brands/" + uuid
+	baseAPIURL         = "http://api.ft.com/"
+	thingAPIURL        = baseAPIURL + "things/" + uuid
+	personAPIURL       = baseAPIURL + "people/" + uuid
+	organisationAPIURL = baseAPIURL + "organisations/" + uuid
+	contentAPIURL      = baseAPIURL + "content/" + uuid
+	brandAPIURL        = baseAPIURL + "brands/" + uuid
+)
 
 func TestTypeURIsForPeople(t *testing.T) {
 	assert.New(t).EqualValues([]string{thingURI, conceptURI, personURI}, TypeURIs(personLabels))
