@@ -1,184 +1,164 @@
 package mapper
 
 import (
+	"log"
 	"testing"
-	"unicode"
 
 	"github.com/stretchr/testify/assert"
 )
 
-var thingLabels = []string{"Thing"}
-var conceptLabels = append(thingLabels, "Concept")
-var roleLabels = append(thingLabels, "Role")
-var boardRoleLabels = append(roleLabels, "BoardRole")
-var brandLabels = append(conceptLabels, "Brand")
-var personLabels = append(conceptLabels, "Person")
-var organisationLabels = append(conceptLabels, "Organisation")
-var membershipLabels = append(conceptLabels, "Membership")
-var companyLabels = append(organisationLabels, "Company")
-var publicCompanyLabels = append(companyLabels, "PublicCompany")
-var privateCompanyLabels = append(companyLabels, "PrivateCompany")
-var classificationLabels = append(conceptLabels, "Classification")
-var industryClassificationLabels = append(classificationLabels, "IndustryClassification")
-var subjectLabels = append(classificationLabels, "Subject")
-var sectionLabels = append(classificationLabels, "Section")
-var genreLabels = append(classificationLabels, "Genre")
-var topicLabels = append(conceptLabels, "Topic")
-var locationLabels = append(conceptLabels, "Location")
+func allLabelsFor(label string) []string {
+	allLabels := []string{}
+	for t := label; t != ""; t = ParentType(t) {
+		allLabels = append(allLabels, t)
+	}
+	return allLabels
+}
 
-var baseURI = "http://www.ft.com/ontology/"
-var env = "prod"
-var envTest = "test"
-var thingURIs = []string{baseURI + "core/Thing"}
-var conceptURIs = append(thingURIs, baseURI+"concept/Concept")
-var roleURIs = append(thingURIs, baseURI+"organisation/Role")
-var boardRoleURIs = append(roleURIs, baseURI+"organisation/BoardRole")
-var classificationURIs = append(conceptURIs, baseURI+"classification/Classification")
-var industryClassificationURIs = append(classificationURIs, baseURI+"industry/IndustryClassification")
-var personURIs = append(conceptURIs, baseURI+"person/Person")
-var brandURIs = append(conceptURIs, baseURI+"product/Brand")
-var organisationURIs = append(conceptURIs, baseURI+"organisation/Organisation")
-var membershipURIs = append(conceptURIs, baseURI+"organisation/Membership")
-var companyURIs = append(organisationURIs, baseURI+"company/Company")
-var publicCompanyURIs = append(companyURIs, baseURI+"company/PublicCompany")
-var privateCompanyURIs = append(companyURIs, baseURI+"company/PrivateCompany")
-var subjectURIs = append(classificationURIs, baseURI+"Subject")
-var sectionURIs = append(classificationURIs, baseURI+"Section")
-var genreURIs = append(classificationURIs, baseURI+"Genre")
-var topicURIs = append(conceptURIs, baseURI+"Topic")
-var locationURIs = append(conceptURIs, baseURI+"Location")
+var (
+	thingLabels                  = allLabelsFor("Thing")
+	conceptLabels                = allLabelsFor("Concept")
+	roleLabels                   = allLabelsFor("Role")
+	boardRoleLabels              = allLabelsFor("BoardRole")
+	brandLabels                  = allLabelsFor("Brand")
+	personLabels                 = allLabelsFor("Person")
+	organisationLabels           = allLabelsFor("Organisation")
+	membershipLabels             = allLabelsFor("Membership")
+	companyLabels                = allLabelsFor("Company")
+	publicCompanyLabels          = allLabelsFor("PublicCompany")
+	privateCompanyLabels         = allLabelsFor("PrivateCompany")
+	classificationLabels         = allLabelsFor("Classification")
+	industryClassificationLabels = allLabelsFor("IndustryClassification")
+	subjectLabels                = allLabelsFor("Subject")
+	sectionLabels                = allLabelsFor("Section")
+	genreLabels                  = allLabelsFor("Genre")
+	topicLabels                  = allLabelsFor("Topic")
+	locationLabels               = allLabelsFor("Location")
 
-var uuid = "92f4ec09-436d-4092-a88c-96f54e34007c"
+	thingURI                  = "http://www.ft.com/ontology/core/Thing"
+	conceptURI                = "http://www.ft.com/ontology/concept/Concept"
+	roleURI                   = "http://www.ft.com/ontology/organisation/Role"
+	boardRoleURI              = "http://www.ft.com/ontology/organisation/BoardRole"
+	classificationURI         = "http://www.ft.com/ontology/classification/Classification"
+	industryClassificationURI = "http://www.ft.com/ontology/industry/IndustryClassification"
+	personURI                 = "http://www.ft.com/ontology/person/Person"
+	brandURI                  = "http://www.ft.com/ontology/product/Brand"
+	organisationURI           = "http://www.ft.com/ontology/organisation/Organisation"
+	membershipURI             = "http://www.ft.com/ontology/organisation/Membership"
+	companyURI                = "http://www.ft.com/ontology/company/Company"
+	publicCompanyURI          = "http://www.ft.com/ontology/company/PublicCompany"
+	privateCompanyURI         = "http://www.ft.com/ontology/company/PrivateCompany"
+	subjectURI                = "http://www.ft.com/ontology/Subject"
+	sectionURI                = "http://www.ft.com/ontology/Section"
+	genreURI                  = "http://www.ft.com/ontology/Genre"
+	topicURI                  = "http://www.ft.com/ontology/Topic"
+	locationURI               = "http://www.ft.com/ontology/Location"
 
-var baseAPIURL = "http://api.ft.com/"
-var thingAPIURL = baseAPIURL + "things/" + uuid
-var personAPIURL = baseAPIURL + "people/" + uuid
-var organisationAPIURL = baseAPIURL + "organisations/" + uuid
-var contentAPIURL = baseAPIURL + "content/" + uuid
-var brandAPIURL = baseAPIURL + "brands/" + uuid
+	uuid = "92f4ec09-436d-4092-a88c-96f54e34007c"
+
+	env     = "prod"
+	envTest = "test"
+
+	baseAPIURL         = "http://api.ft.com/"
+	thingAPIURL        = baseAPIURL + "things/" + uuid
+	personAPIURL       = baseAPIURL + "people/" + uuid
+	organisationAPIURL = baseAPIURL + "organisations/" + uuid
+	contentAPIURL      = baseAPIURL + "content/" + uuid
+	brandAPIURL        = baseAPIURL + "brands/" + uuid
+)
 
 func TestTypeURIsForPeople(t *testing.T) {
-	assert.New(t).EqualValues(personURIs, TypeURIs(personLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, personURI}, TypeURIs(personLabels))
 }
 
 func TestTypeURIsForOrganisations(t *testing.T) {
-	assert.New(t).EqualValues(organisationURIs, TypeURIs(organisationLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, organisationURI}, TypeURIs(organisationLabels))
 }
 
 func TestTypeURIsForMemberships(t *testing.T) {
-	assert.New(t).EqualValues(membershipURIs, TypeURIs(membershipLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, membershipURI}, TypeURIs(membershipLabels))
 }
 
 func TestTypeURIsForRoles(t *testing.T) {
-	assert.New(t).EqualValues(roleURIs, TypeURIs(roleLabels))
+	assert.New(t).EqualValues([]string{thingURI, roleURI}, TypeURIs(roleLabels))
 }
 
 func TestTypeURIsForBoardRoles(t *testing.T) {
-	assert.New(t).EqualValues(boardRoleURIs, TypeURIs(boardRoleLabels))
+	assert.New(t).EqualValues([]string{thingURI, roleURI, boardRoleURI}, TypeURIs(boardRoleLabels))
 }
 
 func TestTypeURIsForCompany(t *testing.T) {
-	assert.New(t).EqualValues(companyURIs, TypeURIs(companyLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, organisationURI, companyURI}, TypeURIs(companyLabels))
 }
 
 func TestTypeURIsForPublicCompany(t *testing.T) {
-	assert.New(t).EqualValues(publicCompanyURIs, TypeURIs(publicCompanyLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, organisationURI, companyURI, publicCompanyURI}, TypeURIs(publicCompanyLabels))
 }
 
 func TestTypeURIsForPrivateCompany(t *testing.T) {
-	assert.New(t).EqualValues(privateCompanyURIs, TypeURIs(privateCompanyLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, organisationURI, companyURI, privateCompanyURI}, TypeURIs(privateCompanyLabels))
 }
 
 func TestTypeURIsForBrand(t *testing.T) {
-	assert.New(t).EqualValues(brandURIs, TypeURIs(brandLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, classificationURI, brandURI}, TypeURIs(brandLabels))
 }
 
 func TestTypeURIsForSubject(t *testing.T) {
-	assert.New(t).EqualValues(subjectURIs, TypeURIs(subjectLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, classificationURI, subjectURI}, TypeURIs(subjectLabels))
 }
 
 func TestTypeURIsForSection(t *testing.T) {
-	assert.New(t).EqualValues(sectionURIs, TypeURIs(sectionLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, classificationURI, sectionURI}, TypeURIs(sectionLabels))
 }
 
 func TestTypeURIsForGenre(t *testing.T) {
-	assert.New(t).EqualValues(genreURIs, TypeURIs(genreLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, classificationURI, genreURI}, TypeURIs(genreLabels))
 }
 
 func TestTypeURIsForTopic(t *testing.T) {
-	assert.New(t).EqualValues(topicURIs, TypeURIs(topicLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, topicURI}, TypeURIs(topicLabels))
 }
 
 func TestTypeURIsForLocation(t *testing.T) {
-	assert.New(t).EqualValues(locationURIs, TypeURIs(locationLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, locationURI}, TypeURIs(locationLabels))
+}
+
+func TestTypeURIsForIndustryClassification(t *testing.T) {
+	log.Printf("labels =%v", industryClassificationLabels)
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, classificationURI, industryClassificationURI}, TypeURIs(industryClassificationLabels))
 }
 
 func TestContentAPIURLs(t *testing.T) {
 	neoLabels := []string{"Content"}
 	assert.New(t).EqualValues(contentAPIURL, APIURL(uuid, neoLabels, env))
-	assert.New(t).EqualValues(contentAPIURL, APIURL(uuid, caseMixer(neoLabels), env))
-}
-
-func TestTypeURIsForIndustryClassification(t *testing.T) {
-	assert.New(t).EqualValues(industryClassificationURIs, TypeURIs(industryClassificationLabels))
 }
 
 func TestCompanyAPIURLs(t *testing.T) {
 	neoLabels := []string{"PublicCompany", "Organisation", "Company"}
 	assert.New(t).EqualValues(organisationAPIURL, APIURL(uuid, neoLabels, env))
-	assert.New(t).EqualValues(organisationAPIURL, APIURL(uuid, caseMixer(neoLabels), env))
 }
 
 func TestOrganisationAPIURLs(t *testing.T) {
 	neoLabels := []string{"Organisation", "Concept", "Thing"}
 	assert.New(t).EqualValues(organisationAPIURL, APIURL(uuid, neoLabels, env))
-	assert.New(t).EqualValues(organisationAPIURL, APIURL(uuid, caseMixer(neoLabels), env))
 }
 
 func TestPeopleAPIURLs(t *testing.T) {
 	neoLabels := []string{"Person"}
 	assert.New(t).EqualValues(personAPIURL, APIURL(uuid, neoLabels, env))
-	assert.New(t).EqualValues(personAPIURL, APIURL(uuid, caseMixer(neoLabels), env))
 
 }
 
 func TestBrandAPIURLs(t *testing.T) {
 	neoLabels := []string{"Brand"}
 	assert.New(t).EqualValues(brandAPIURL, APIURL(uuid, neoLabels, env))
-	assert.New(t).EqualValues(brandAPIURL, APIURL(uuid, caseMixer(neoLabels), env))
 
 }
 
 func TestDefaultAPIURLs(t *testing.T) {
 	neoLabels := []string{"thing", "relationship", "otherPrivateType"}
 	assert.New(t).EqualValues(thingAPIURL, APIURL(uuid, neoLabels, env))
-	assert.New(t).EqualValues(thingAPIURL, APIURL(uuid, caseMixer(neoLabels), env))
 
-}
-
-func TestInsensitivePersonTypeURIs(t *testing.T) {
-	neoLabels := caseMixer(personLabels)
-	assert.New(t).EqualValues(personURIs, TypeURIs(neoLabels))
-}
-
-func TestInsensitiveOrganisationTypeURIs(t *testing.T) {
-	neoLabels := caseMixer(organisationLabels)
-	assert.New(t).EqualValues(organisationURIs, TypeURIs(neoLabels))
-}
-
-func TestInsensitiveCompanyTypeURIs(t *testing.T) {
-	neoLabels := caseMixer(companyLabels)
-	assert.New(t).EqualValues(companyURIs, TypeURIs(neoLabels))
-}
-
-func TestInsensitivePublicCompanyTypeURIs(t *testing.T) {
-	neoLabels := caseMixer(publicCompanyLabels)
-	assert.New(t).EqualValues(publicCompanyURIs, TypeURIs(neoLabels))
-}
-
-func TestInsensitivePrivateCompanyTypeURIs(t *testing.T) {
-	neoLabels := caseMixer(privateCompanyLabels)
-	assert.New(t).EqualValues(privateCompanyURIs, TypeURIs(neoLabels))
 }
 
 func TestMostSpecific(t *testing.T) {
@@ -255,26 +235,4 @@ func TestTypeSorter(t *testing.T) {
 		assert.Equal(t.expected, sorted)
 		assert.Equal(t.err, err)
 	}
-}
-
-func caseMixer(toMixUp []string) (mixedUp []string) {
-	mixedUp = toMixUp
-	for idx := range mixedUp {
-		mixedUp[idx] = mixUpCase(mixedUp[idx])
-	}
-	return mixedUp
-}
-
-func mixUpCase(toMixUp string) (mixedUp string) {
-	for idx, rune := range toMixUp {
-		if idx%2 == 0 {
-			if unicode.IsUpper(rune) {
-				rune = unicode.ToLower(rune)
-			} else {
-				rune = unicode.ToUpper(rune)
-			}
-		}
-		mixedUp += string(rune)
-	}
-	return mixedUp
 }

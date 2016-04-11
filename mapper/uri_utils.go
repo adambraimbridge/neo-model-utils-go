@@ -1,37 +1,34 @@
 package mapper
 
-import (
-	"log"
-	"strings"
-)
+import "log"
 
 var apiPaths = map[string]string{
-	"organisation": "organisations",
-	"person":       "people",
-	"brand":        "brands",
-	"thing":        "things",
-	"content":      "content",
+	"Organisation": "organisations",
+	"Person":       "people",
+	"Brand":        "brands",
+	"Thing":        "things",
+	"Content":      "content",
 }
 
 var typeURIs = map[string]string{
-	"thing":                  "http://www.ft.com/ontology/core/Thing",
-	"concept":                "http://www.ft.com/ontology/concept/Concept",
-	"role":                   "http://www.ft.com/ontology/organisation/Role",
-	"boardrole":              "http://www.ft.com/ontology/organisation/BoardRole",
-	"classification":         "http://www.ft.com/ontology/classification/Classification",
-	"industryclassification": "http://www.ft.com/ontology/industry/IndustryClassification",
-	"person":                 "http://www.ft.com/ontology/person/Person",
-	"organisation":           "http://www.ft.com/ontology/organisation/Organisation",
-	"membership":             "http://www.ft.com/ontology/organisation/Membership",
-	"company":                "http://www.ft.com/ontology/company/Company",
-	"publiccompany":          "http://www.ft.com/ontology/company/PublicCompany",
-	"privatecompany":         "http://www.ft.com/ontology/company/PrivateCompany",
-	"brand":                  "http://www.ft.com/ontology/product/Brand",
-	"subject":                "http://www.ft.com/ontology/Subject",
-	"section":                "http://www.ft.com/ontology/Section",
-	"topic":                  "http://www.ft.com/ontology/Topic",
-	"location":               "http://www.ft.com/ontology/Location",
-	"genre":                  "http://www.ft.com/ontology/Genre",
+	"Thing":                  "http://www.ft.com/ontology/core/Thing",
+	"Concept":                "http://www.ft.com/ontology/concept/Concept",
+	"Role":                   "http://www.ft.com/ontology/organisation/Role",
+	"BoardRole":              "http://www.ft.com/ontology/organisation/BoardRole",
+	"Classification":         "http://www.ft.com/ontology/classification/Classification",
+	"IndustryClassification": "http://www.ft.com/ontology/industry/IndustryClassification",
+	"Person":                 "http://www.ft.com/ontology/person/Person",
+	"Organisation":           "http://www.ft.com/ontology/organisation/Organisation",
+	"Membership":             "http://www.ft.com/ontology/organisation/Membership",
+	"Company":                "http://www.ft.com/ontology/company/Company",
+	"PublicCompany":          "http://www.ft.com/ontology/company/PublicCompany",
+	"PrivateCompany":         "http://www.ft.com/ontology/company/PrivateCompany",
+	"Brand":                  "http://www.ft.com/ontology/product/Brand",
+	"Subject":                "http://www.ft.com/ontology/Subject",
+	"Section":                "http://www.ft.com/ontology/Section",
+	"Topic":                  "http://www.ft.com/ontology/Topic",
+	"Location":               "http://www.ft.com/ontology/Location",
+	"Genre":                  "http://www.ft.com/ontology/Genre",
 }
 
 // APIURL - Establishes the ApiURL given a whether the Label is a Person, Organisation or Company (Public or Private)
@@ -40,8 +37,6 @@ func APIURL(uuid string, labels []string, env string) string {
 	if env == "test" {
 		base = "http://test.api.ft.com/"
 	}
-
-	allLower(labels)
 
 	path := ""
 	mostSpecific, err := mostSpecific(labels)
@@ -72,7 +67,7 @@ func TypeURIs(labels []string) []string {
 		return []string{}
 	}
 	for _, label := range sorted {
-		uri := typeURIs[strings.ToLower(label)]
+		uri := typeURIs[label]
 		if uri != "" {
 			results = append(results, uri)
 		}
