@@ -30,6 +30,7 @@ var typeURIs = map[string]string{
 	"Location":               "http://www.ft.com/ontology/Location",
 	"Genre":                  "http://www.ft.com/ontology/Genre",
 	"SpecialReport":          "http://www.ft.com/ontology/SpecialReport",
+	"AlphavilleSeries":       "http://www.ft.com/ontology/AlphavilleSeries",
 }
 
 // APIURL - Establishes the ApiURL given a whether the Label is a Person, Organisation or Company (Public or Private)
