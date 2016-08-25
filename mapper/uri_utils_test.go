@@ -36,7 +36,7 @@ var (
 	locationLabels               = allLabelsFor("Location")
 	specialReportLabels          = allLabelsFor("SpecialReport")
 	alphavilleSeriesLabels       = allLabelsFor("AlphavilleSeries")
-	financialInstrumentsLabels   = allLabelsFor("FinancialInstruments")
+	financialInstrumentsLabels   = allLabelsFor("FinancialInstrument")
 
 	thingURI                  = "http://www.ft.com/ontology/core/Thing"
 	conceptURI                = "http://www.ft.com/ontology/concept/Concept"
@@ -58,7 +58,7 @@ var (
 	locationURI               = "http://www.ft.com/ontology/Location"
 	specialReportURI          = "http://www.ft.com/ontology/SpecialReport"
 	alphavilleSeriesURI       = "http://www.ft.com/ontology/AlphavilleSeries"
-	financialInstrumentURI    = "http://www.ft.com/ontology/FinancialInstruments"
+	financialInstrumentURI    = "http://www.ft.com/ontology/FinancialInstrument"
 
 	uuid = "92f4ec09-436d-4092-a88c-96f54e34007c"
 
