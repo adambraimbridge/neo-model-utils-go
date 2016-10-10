@@ -36,6 +36,7 @@ var (
 	locationLabels               = allLabelsFor("Location")
 	specialReportLabels          = allLabelsFor("SpecialReport")
 	alphavilleSeriesLabels       = allLabelsFor("AlphavilleSeries")
+	financialInstrumentsLabels   = allLabelsFor("FinancialInstrument")
 
 	thingURI                  = "http://www.ft.com/ontology/core/Thing"
 	conceptURI                = "http://www.ft.com/ontology/concept/Concept"
@@ -57,6 +58,7 @@ var (
 	locationURI               = "http://www.ft.com/ontology/Location"
 	specialReportURI          = "http://www.ft.com/ontology/SpecialReport"
 	alphavilleSeriesURI       = "http://www.ft.com/ontology/AlphavilleSeries"
+	financialInstrumentURI    = "http://www.ft.com/ontology/FinancialInstrument"
 
 	uuid = "92f4ec09-436d-4092-a88c-96f54e34007c"
 
@@ -138,6 +140,10 @@ func TestTypeURIsForIndustryClassification(t *testing.T) {
 
 func TestTypeURIsForAlphavilleSeries(t *testing.T) {
 	assert.New(t).EqualValues([]string{thingURI, conceptURI, classificationURI, alphavilleSeriesURI}, TypeURIs(alphavilleSeriesLabels))
+}
+
+func TestTypeURIForFinancialInstruments(t *testing.T) {
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, financialInstrumentURI}, TypeURIs(financialInstrumentsLabels))
 }
 
 func TestContentAPIURLs(t *testing.T) {
