@@ -46,7 +46,7 @@ func isDescendent(descendent, ancestor string) bool {
 
 // MostSpecific returns the most specific from a list of types in an hierarchy
 // behaviour is undefined if any of the types are siblings.
-func mostSpecific(types []string) (string, error) {
+func MostSpecificType(types []string) (string, error) {
 	if len(types) == 0 {
 		return "", errors.New("no types supplied")
 	}

@@ -42,7 +42,7 @@ func APIURL(uuid string, labels []string, env string) string {
 	}
 
 	path := ""
-	mostSpecific, err := mostSpecific(labels)
+	mostSpecific, err := MostSpecificType(labels)
 	if err == nil {
 		for t := mostSpecific; t != "" && path == ""; t = ParentType(t) {
 			path = apiPaths[t]

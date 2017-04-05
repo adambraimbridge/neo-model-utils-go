@@ -209,7 +209,7 @@ func TestMostSpecific(t *testing.T) {
 			ErrNotHierarchy,
 		},
 	} {
-		ms, err := mostSpecific(t.input)
+		ms, err := MostSpecificType(t.input)
 		assert.Equal(t.expected, ms)
 		assert.Equal(t.err, err)
 	}
