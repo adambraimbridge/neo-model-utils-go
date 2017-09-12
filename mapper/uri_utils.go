@@ -15,6 +15,7 @@ var typeURIs = map[string]string{
 	"Concept":                "http://www.ft.com/ontology/concept/Concept",
 	"Role":                   "http://www.ft.com/ontology/organisation/Role",
 	"BoardRole":              "http://www.ft.com/ontology/organisation/BoardRole",
+	"MembershipRole":         "http://www.ft.com/ontology/MembershipRole",
 	"Classification":         "http://www.ft.com/ontology/classification/Classification",
 	"IndustryClassification": "http://www.ft.com/ontology/industry/IndustryClassification",
 	"Person":                 "http://www.ft.com/ontology/person/Person",

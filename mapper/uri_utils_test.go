@@ -20,6 +20,7 @@ var (
 	conceptLabels                = allLabelsFor("Concept")
 	roleLabels                   = allLabelsFor("Role")
 	boardRoleLabels              = allLabelsFor("BoardRole")
+	membershipRoleLabels         = allLabelsFor("MembershipRole")
 	brandLabels                  = allLabelsFor("Brand")
 	personLabels                 = allLabelsFor("Person")
 	organisationLabels           = allLabelsFor("Organisation")
@@ -42,6 +43,7 @@ var (
 	conceptURI                = "http://www.ft.com/ontology/concept/Concept"
 	roleURI                   = "http://www.ft.com/ontology/organisation/Role"
 	boardRoleURI              = "http://www.ft.com/ontology/organisation/BoardRole"
+	membershipRoleURI         = "http://www.ft.com/ontology/MembershipRole"
 	classificationURI         = "http://www.ft.com/ontology/classification/Classification"
 	industryClassificationURI = "http://www.ft.com/ontology/industry/IndustryClassification"
 	personURI                 = "http://www.ft.com/ontology/person/Person"
@@ -86,11 +88,15 @@ func TestTypeURIsForMemberships(t *testing.T) {
 }
 
 func TestTypeURIsForRoles(t *testing.T) {
-	assert.New(t).EqualValues([]string{thingURI, roleURI}, TypeURIs(roleLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, roleURI}, TypeURIs(roleLabels))
+}
+
+func TestTypeURIsForMembershipBoardRoles(t *testing.T) {
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, roleURI, membershipRoleURI}, TypeURIs(membershipRoleLabels))
 }
 
 func TestTypeURIsForBoardRoles(t *testing.T) {
-	assert.New(t).EqualValues([]string{thingURI, roleURI, boardRoleURI}, TypeURIs(boardRoleLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, roleURI, boardRoleURI}, TypeURIs(boardRoleLabels))
 }
 
 func TestTypeURIsForCompany(t *testing.T) {
