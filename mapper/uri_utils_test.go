@@ -86,11 +86,11 @@ func TestTypeURIsForMemberships(t *testing.T) {
 }
 
 func TestTypeURIsForRoles(t *testing.T) {
-	assert.New(t).EqualValues([]string{thingURI, roleURI}, TypeURIs(roleLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, roleURI}, TypeURIs(roleLabels))
 }
 
 func TestTypeURIsForBoardRoles(t *testing.T) {
-	assert.New(t).EqualValues([]string{thingURI, roleURI, boardRoleURI}, TypeURIs(boardRoleLabels))
+	assert.New(t).EqualValues([]string{thingURI, conceptURI, roleURI, boardRoleURI}, TypeURIs(boardRoleLabels))
 }
 
 func TestTypeURIsForCompany(t *testing.T) {
