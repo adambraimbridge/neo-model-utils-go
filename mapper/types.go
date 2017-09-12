@@ -8,7 +8,8 @@ import (
 var parentTypes = map[string]string{
 	"Thing":                  "", // this is here to enable iterating over map keys to get all types
 	"Concept":                "Thing",
-	"Role":                   "Thing",
+	"Role":                   "Concept",
+	"MembershipRole":         "Role",
 	"BoardRole":              "Role",
 	"Classification":         "Concept",
 	"Person":                 "Concept",
