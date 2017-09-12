@@ -43,7 +43,7 @@ var (
 	conceptURI                = "http://www.ft.com/ontology/concept/Concept"
 	roleURI                   = "http://www.ft.com/ontology/organisation/Role"
 	boardRoleURI              = "http://www.ft.com/ontology/organisation/BoardRole"
-	membershipRoleURI         = "http://www.ft.com/ontology/organisation/MembershipRole"
+	membershipRoleURI         = "http://www.ft.com/ontology/MembershipRole"
 	classificationURI         = "http://www.ft.com/ontology/classification/Classification"
 	industryClassificationURI = "http://www.ft.com/ontology/industry/IndustryClassification"
 	personURI                 = "http://www.ft.com/ontology/person/Person"
