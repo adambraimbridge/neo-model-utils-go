@@ -9,8 +9,8 @@ var parentTypes = map[string]string{
 	"Thing":                  "", // this is here to enable iterating over map keys to get all types
 	"Concept":                "Thing",
 	"Role":                   "Concept",
-	"MembershipRole":         "Role",
-	"BoardRole":              "Role",
+	"MembershipRole":         "Concept",
+	"BoardRole":              "MembershipRole",
 	"Classification":         "Concept",
 	"Person":                 "Concept",
 	"Organisation":           "Concept",
