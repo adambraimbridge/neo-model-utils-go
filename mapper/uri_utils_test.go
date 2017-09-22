@@ -1,7 +1,6 @@
 package mapper
 
 import (
-	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
