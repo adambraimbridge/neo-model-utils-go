@@ -18,7 +18,6 @@ func allLabelsFor(label string) []string {
 var (
 	thingLabels                  = allLabelsFor("Thing")
 	conceptLabels                = allLabelsFor("Concept")
-	roleLabels                   = allLabelsFor("Role")
 	boardRoleLabels              = allLabelsFor("BoardRole")
 	membershipRoleLabels         = allLabelsFor("MembershipRole")
 	brandLabels                  = allLabelsFor("Brand")
@@ -41,7 +40,6 @@ var (
 
 	thingURI                  = "http://www.ft.com/ontology/core/Thing"
 	conceptURI                = "http://www.ft.com/ontology/concept/Concept"
-	roleURI                   = "http://www.ft.com/ontology/organisation/Role"
 	boardRoleURI              = "http://www.ft.com/ontology/organisation/BoardRole"
 	membershipRoleURI         = "http://www.ft.com/ontology/MembershipRole"
 	classificationURI         = "http://www.ft.com/ontology/classification/Classification"
@@ -87,11 +85,7 @@ func TestTypeURIsForMemberships(t *testing.T) {
 	assert.New(t).EqualValues([]string{thingURI, conceptURI, membershipURI}, TypeURIs(membershipLabels))
 }
 
-func TestTypeURIsForRoles(t *testing.T) {
-	assert.New(t).EqualValues([]string{thingURI, conceptURI, roleURI}, TypeURIs(roleLabels))
-}
-
-func TestTypeURIsForMembershipBoardRoles(t *testing.T) {
+func TestTypeURIsForMembershipRoles(t *testing.T) {
 	assert.New(t).EqualValues([]string{thingURI, conceptURI, membershipRoleURI}, TypeURIs(membershipRoleLabels))
 }
 
@@ -140,7 +134,6 @@ func TestTypeURIsForSpecialReport(t *testing.T) {
 }
 
 func TestTypeURIsForIndustryClassification(t *testing.T) {
-	log.Printf("labels =%v", industryClassificationLabels)
 	assert.New(t).EqualValues([]string{thingURI, conceptURI, classificationURI, industryClassificationURI}, TypeURIs(industryClassificationLabels))
 }
 
