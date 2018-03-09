@@ -3,12 +3,11 @@ package mapper
 import "log"
 
 var apiPaths = map[string]string{
-	"Organisation":   "organisations",
-	"Person":         "people",
-	"Brand":          "brands",
-	"Thing":          "things",
-	"Content":        "content",
-	"ContentPackage": "content",
+	"Organisation": "organisations",
+	"Person":       "people",
+	"Brand":        "brands",
+	"Thing":        "things",
+	"Content":      "content",
 }
 
 var typeURIs = map[string]string{
