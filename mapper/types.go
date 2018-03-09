@@ -25,6 +25,7 @@ var parentTypes = map[string]string{
 	"IndustryClassification": "Classification",
 	"Topic":                  "Concept",
 	"Content":                "Thing",
+	"ContentPackage":         "Content",
 	"SpecialReport":          "Classification",
 	"AlphavilleSeries":       "Classification",
 	"FinancialInstrument":    "Concept",

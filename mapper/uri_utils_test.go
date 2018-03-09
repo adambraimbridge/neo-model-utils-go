@@ -149,6 +149,11 @@ func TestContentAPIURLs(t *testing.T) {
 	assert.New(t).EqualValues(contentAPIURL, APIURL(uuid, neoLabels, env))
 }
 
+func TestContentPackageAPIURLs(t *testing.T) {
+	neoLabels := []string{"Thing", "ContentPackage", "Content"}
+	assert.New(t).EqualValues(contentAPIURL, APIURL(uuid, neoLabels, env))
+}
+
 func TestCompanyAPIURLs(t *testing.T) {
 	neoLabels := []string{"PublicCompany", "Organisation", "Company"}
 	assert.New(t).EqualValues(organisationAPIURL, APIURL(uuid, neoLabels, env))
