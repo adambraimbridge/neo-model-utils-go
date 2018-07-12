@@ -3,6 +3,7 @@ package mapper
 import (
 	"errors"
 	"sort"
+	"strings"
 )
 
 var parentTypes = map[string]string{
@@ -56,6 +57,24 @@ func MostSpecificType(types []string) (string, error) {
 		return "", err
 	}
 	return sorted[len(sorted)-1], nil
+}
+
+//Full type hierarchy is returned when provided either the concept type
+// or full uri of the most specific concept type
+func FullTypeHierarchy(highestLevelType string) []string {
+	var typeHierarchy []string
+	t := strings.Split(highestLevelType, "/")
+	typeToCheck := t[len(t)-1]
+	for {
+		typeHierarchy = append(typeHierarchy, typeToCheck)
+		parentType := ParentType(typeToCheck)
+		if parentType != "" {
+			typeToCheck = parentType
+		} else {
+			return TypeURIs(typeHierarchy)
+		}
+	}
+
 }
 
 var ErrNotHierarchy = errors.New("provided types are not a consistent hierarchy")
