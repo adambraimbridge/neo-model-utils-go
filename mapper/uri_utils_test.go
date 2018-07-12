@@ -70,6 +70,28 @@ var (
 	organisationAPIURL = baseAPIURL + "organisations/" + uuid
 	contentAPIURL      = baseAPIURL + "content/" + uuid
 	brandAPIURL        = baseAPIURL + "brands/" + uuid
+
+	brandHierarchy = []string{
+		"http://www.ft.com/ontology/core/Thing",
+		"http://www.ft.com/ontology/concept/Concept",
+		"http://www.ft.com/ontology/classification/Classification",
+		"http://www.ft.com/ontology/product/Brand",
+	}
+
+	publicCompanyHierarchy = []string{
+		"http://www.ft.com/ontology/core/Thing",
+		"http://www.ft.com/ontology/concept/Concept",
+		"http://www.ft.com/ontology/organisation/Organisation",
+		"http://www.ft.com/ontology/company/Company",
+		"http://www.ft.com/ontology/company/PublicCompany",
+	}
+
+	boardRoleHierarchy = []string {
+		"http://www.ft.com/ontology/core/Thing",
+		"http://www.ft.com/ontology/concept/Concept",
+		"http://www.ft.com/ontology/MembershipRole",
+		"http://www.ft.com/ontology/organisation/BoardRole",
+	}
 )
 
 func TestTypeURIsForPeople(t *testing.T) {
@@ -256,4 +278,47 @@ func TestTypeSorter(t *testing.T) {
 		assert.Equal(t.expected, sorted)
 		assert.Equal(t.err, err)
 	}
+}
+
+func TestFullTypeHierarchy(t *testing.T) {
+	assert := assert.New(t)
+	for _, t := range []struct {
+		startingType string
+		expectedHierarchy []string
+	} {
+		{
+			"Brand",
+			brandHierarchy,
+		},
+		{
+
+			"http://www.ft.com/ontology/product/Brand",
+			brandHierarchy,
+		},
+		{
+
+			"PublicCompany",
+			publicCompanyHierarchy,
+		},
+		{
+
+			"http://www.ft.com/ontology/company/PublicCompany",
+			publicCompanyHierarchy,
+		},
+		{
+
+			"BoardRole",
+			boardRoleHierarchy,
+		},
+		{
+
+			"http://www.ft.com/ontology/organisation/BoardRole",
+			boardRoleHierarchy,
+		},
+	} {
+		convertedHierarchy := FullTypeHierarchy(t.startingType)
+		assert.Equal(t.expectedHierarchy, convertedHierarchy)
+	}
+
+
 }
