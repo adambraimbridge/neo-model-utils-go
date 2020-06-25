@@ -1,34 +1,13 @@
-version: 2
-jobs:
-  build:
-    working_directory: /go/src/github.com/Financial-Times/neo-model-utils-go
-    docker:
-      - image: golang:1.8.3
-        environment:
-          GOPATH: /go
-          CIRCLE_TEST_REPORTS: /tmp/test-results
-          CIRCLE_COVERAGE_REPORT: /tmp/coverage-results
-    steps:
-      - checkout
-      - run:
-          name: External Dependencies
-          command: |
-            go get -u github.com/jstemmer/go-junit-report
-      - run:
-          name: Test Results
-          command: |
-            mkdir -p ${CIRCLE_TEST_REPORTS}
-            mkdir -p ${CIRCLE_COVERAGE_REPORT}
-      - run:
-          name: Go Build
-          command: go get -d -t -v ./...
-      - run:
-          name: Go Build
-          command: go build -v
-      - run:
-          name: Run Tests
-          command: |
-            go test -race -v ./...
-            go test -race -v ./... | /go/bin/go-junit-report > ${CIRCLE_TEST_REPORTS}/main.xml
-      - store_test_results:
-          path: /tmp/test-results
+version: 2.1
+orbs:
+  ft-golang-ci: financial-times/golang-ci@1
+workflows:
+  build-and-test:
+    jobs:
+      - ft-golang-ci/build-and-test:
+          name: build-and-test-project
+  snyk-scanning:
+    jobs:
+      - ft-golang-ci/scan:
+          name: scan-dependencies
+          context: cm-team-snyk
