@@ -64,7 +64,7 @@ var (
 	env     = "prod"
 	envTest = "test"
 
-	baseAPIURL         = "http://api.ft.com/"
+	baseAPIURL         = "https://api.ft.com/"
 	thingAPIURL        = baseAPIURL + "things/" + uuid
 	personAPIURL       = baseAPIURL + "people/" + uuid
 	organisationAPIURL = baseAPIURL + "organisations/" + uuid
@@ -86,7 +86,7 @@ var (
 		"http://www.ft.com/ontology/company/PublicCompany",
 	}
 
-	boardRoleHierarchy = []string {
+	boardRoleHierarchy = []string{
 		"http://www.ft.com/ontology/core/Thing",
 		"http://www.ft.com/ontology/concept/Concept",
 		"http://www.ft.com/ontology/MembershipRole",
@@ -283,9 +283,9 @@ func TestTypeSorter(t *testing.T) {
 func TestFullTypeHierarchy(t *testing.T) {
 	assert := assert.New(t)
 	for _, t := range []struct {
-		startingType string
+		startingType      string
 		expectedHierarchy []string
-	} {
+	}{
 		{
 			"Brand",
 			brandHierarchy,
@@ -319,6 +319,5 @@ func TestFullTypeHierarchy(t *testing.T) {
 		convertedHierarchy := FullTypeHierarchy(t.startingType)
 		assert.Equal(t.expectedHierarchy, convertedHierarchy)
 	}
-
 
 }

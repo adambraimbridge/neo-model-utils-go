@@ -37,9 +37,9 @@ var typeURIs = map[string]string{
 
 // APIURL - Establishes the ApiURL given a whether the Label is a Person, Organisation or Company (Public or Private)
 func APIURL(uuid string, labels []string, env string) string {
-	base := "http://api.ft.com/"
+	base := "https://api.ft.com/"
 	if env == "test" {
-		base = "http://test.api.ft.com/"
+		base = "https://api-t.ft.com/"
 	}
 
 	path := ""
